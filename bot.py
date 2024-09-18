@@ -1,4 +1,5 @@
 import pass_bot
+import telebot
 from telebot import types
 #@bebrazin_bot
 bot = pass_bot.bot
