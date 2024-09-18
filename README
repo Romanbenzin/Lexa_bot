@@ -1,0 +1,7 @@
+git rm -r --cached .
+git add .
+git commit -m "Удалены файлы, перечисленные в .gitignore"
+
+#Удалить из отслеживания гитом файлы
+git rm --cached .\pass_bot.py
+git rm --cached .\draft.py
