@@ -12,6 +12,10 @@ def handle_text(message):
         bot.send_message(message.chat.id, "Привет, вы вызвали LEXY зомби")
     elif "TATAR" in message.text.upper():
         bot.send_message(message.chat.id, "@hqdicq хотел бы мне отсосать? (я леха)")
+    elif "/help" in message.text.upper():
+        bot.send_message(message.chat.id, "Введите 'LEXA' если хотите поздороваться со мной"
+                                          "Введите 'LEXA DOTA' для опросника по доте"
+                                          "Введите 'TATAR' чтобы предложить татарину отсосать лехе (мне)")
     else:
         pass
 
