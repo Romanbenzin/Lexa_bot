@@ -9,3 +9,6 @@ git commit -m
 #Удалить из отслеживания гитом файлы
 git rm --cached .\pass_bot.py
 git rm --cached .\draft.py
+
+#Документация по боту
+https://pytba.readthedocs.io/ru/latest/quick_start.html
