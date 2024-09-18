@@ -10,7 +10,10 @@ def handle_text(message):
         print(poll)
     elif "LEXA" in message.text.upper():
         bot.send_message(message.chat.id, "Привет, вы вызвали LEXY зомби")
+    elif "TATAR" in message.text.upper():
+        bot.send_message(message.chat.id, "@hqdicq хотел бы мне отсосать? (я леха)")
     else:
         pass
+
 
 bot.polling(none_stop=True, interval=0)
