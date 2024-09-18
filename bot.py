@@ -1,5 +1,6 @@
-import telebot
-bot = telebot.TeleBot('7385255905:AAHYbZdHtqUMqiaiX-ZnWOoTNgCJrZGRREg')
+import pass_bot
+
+bot = pass_bot.bot
 
 @bot.message_handler(content_types=['text', 'document', 'audio'])
 def handle_text(message):
