@@ -1,24 +1,49 @@
 import pass_bot
-
+from telebot import types
+#@bebrazin_bot
 bot = pass_bot.bot
 
-@bot.message_handler(content_types=['text', 'document', 'audio'])
-def handle_text(message):
-    if "/DOTA" in message.text.upper():
-        question = 'в дотку пидоры?'
-        options = ['да', 'пизда', 'леха', 'нет, я гей']
-        poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
-        print(poll)
-    elif "/LEXA" in message.text.upper():
-        bot.send_message(message.chat.id, "Привет, вы вызвали LEXY зомби")
-    elif "TATAR" in message.text.upper():
-        bot.send_message(message.chat.id, "@hqdicq хотел бы мне отсосать? (я леха)")
-    elif "/help" in message.text.upper():
-        bot.send_message(message.chat.id, "Введите 'LEXA' если хотите поздороваться со мной"
-                                          "Введите 'LEXA DOTA' для опросника по доте"
-                                          "Введите 'TATAR' чтобы предложить татарину отсосать лехе (мне)")
-    else:
-        pass
+@bot.message_handler(commands=['start'])
+def start(message):
+    #markup = types.ReplyKeyboardMarkup()
+    #itembtn1 = types.KeyboardButton('/help')
+    #markup.add(itembtn1)
+    bot.send_message(message.chat.id, "Привет, я бот ЛЕХА. Напиши /help, чтобы узнать мои команды.")#, reply_markup=markup)
 
+@bot.message_handler(commands=['help'])
+def help(message):
+    #markup = types.ReplyKeyboardMarkup()
+    #itembtn1 = types.KeyboardButton('/dota - запускает крутой опросник для игры в доту 2')
+    #itembtn2 = types.KeyboardButton('/lexa - можно круто призвать леху зомби')
+    #itembtn3 = types.KeyboardButton('/tatar - можно круто предложить татарину отсосать')
+    #markup.add(itembtn1, itembtn2, itembtn3)
+    bot.send_message(message.chat.id, "Мои команды:"
+                                      "\n1. /start  -   запускает бота"
+                                      "\n2. /dota   -   Опросник по доте (только для крутых)"
+                                      "\n3. /lexa   -   Поздороваться с ЛЕХОЙ (ЗОМБИ)"
+                                      "\n4. /tatar  -   Предложить татарину отсосать пенис")#, reply_markup=markup)
 
-bot.polling(none_stop=True, interval=0)
+@bot.message_handler(commands=['dota'])
+def dota(message):
+    question = 'в дотку пидоры?'
+    options = ['да', 'пизда', 'леха', 'нет, я гей', 'я не буду играть в доту, потому что не хочу играть в компик и мне 4']
+    poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
+    print(poll)
+
+@bot.message_handler(commands=['lexa'])
+def lexa(message):
+    bot.send_message(message.chat.id, "Привет, вы вызвали ЛЕХУ-ЗОМБИ")
+
+@bot.message_handler(commands=['tatar'])
+def tatar(message):
+    bot.send_message(message.chat.id, "@hqdicq хотел бы ЛЕХЕ отсосать? (я леха)")
+
+bot.set_my_commands([
+    types.BotCommand("start", "Запустить бота"),
+    types.BotCommand("help", "Показать список команд"),
+    types.BotCommand("dota", "Опросник по доте"),
+    types.BotCommand("lexa", "Поздороваться с ЛЕХА ЗОМБИ"),
+    types.BotCommand("tatar", "Предложить татарину отсосать лехе (мне)")
+])
+
+bot.polling()
