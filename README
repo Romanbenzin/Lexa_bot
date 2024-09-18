@@ -1,6 +1,10 @@
+#Установить все зависимости
+pip install -r requirements.txt
+
+"Удалены файлы, перечисленные в .gitignore"
 git rm -r --cached .
 git add .
-git commit -m "Удалены файлы, перечисленные в .gitignore"
+git commit -m
 
 #Удалить из отслеживания гитом файлы
 git rm --cached .\pass_bot.py
