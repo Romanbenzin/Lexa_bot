@@ -12,3 +12,31 @@ git rm --cached .\draft.py
 
 #Документация по боту
 https://pytba.readthedocs.io/ru/latest/quick_start.html
+
+
+[Unit]
+Description=My Bot Service
+After=network.target
+
+[Service]
+User=benzin
+WorkingDirectory=/home/benzin/Lexa_bot
+ExecStart=/usr/bin/python3 /home/benzin/Lexa_bot/bot.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+
+sudo systemctl daemon-reload
+sudo systemctl start mybot.service
+sudo systemctl stop mybot.service
+sudo systemctl status mybot.service
+sudo systemctl enable mybot.service
+
+/etc/systemd/system
+
+
+Обновить ветку
+git remote add origin https://github.com/Romanbenzin/Lexa_bot.git
+benzin@benzin123:~$ git pull origin main
