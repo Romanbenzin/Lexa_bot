@@ -26,8 +26,9 @@ def help(message):
 
 @bot.message_handler(commands=['dota'])
 def dota(message):
-    question = 'в дотку пидоры?'
-    options = ['да', 'пизда', 'леха', 'нет, я гей', 'я не буду играть в доту, потому что не хочу играть в компик и мне 4']
+    bot.send_message(message.chat.id, "@rshchetnikov, @hqdicq, @DaniilPletnev, @Ya_umit, @tim_utt")
+    question = 'Опрос на крутую игру два'
+    options = ['да', '10 мин', 'часик', 'не буду в компик (я сережа)']
     poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
     print(poll)
 
