@@ -1,5 +1,5 @@
 import pass_bot
-import telebot
+import random
 from telebot import types
 #@bebrazin_bot
 bot = pass_bot.bot
@@ -21,14 +21,23 @@ def help(message):
     bot.send_message(message.chat.id, "Мои команды:"
                                       "\n1. /start  -   запускает бота"
                                       "\n2. /dota   -   Опросник по доте (только для крутых)"
-                                      "\n3. /lexa   -   Поздороваться с ЛЕХОЙ (ЗОМБИ)"
-                                      "\n4. /tatar  -   Предложить татарину отсосать пенис")#, reply_markup=markup)
+                                      "\n3. /cs     -   Опросник по контре (только для крутых)"
+                                      "\n4. /lexa   -   Поздороваться с ЛЕХОЙ (ЗОМБИ)"
+                                      "\n5. /pivo   -   Рандомайзер, думаешь попить пивка или нет? - запускай")#, reply_markup=markup)
 
 @bot.message_handler(commands=['dota'])
 def dota(message):
     bot.send_message(message.chat.id, "@rshchetnikov, @hqdicq, @DaniilPletnev, @Ya_umit, @tim_utt")
-    question = 'Опрос на крутую игру два'
-    options = ['да', '10 мин', 'часик', 'не буду в компик (я сережа)']
+    question = 'Опрос на крутую игру два. Посмотри во сколько создан опрос и выбери вариант ответа.'
+    options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня']
+    poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
+    print(poll)
+
+@bot.message_handler(commands=['cs'])
+def cs(message):
+    bot.send_message(message.chat.id, "@rshchetnikov, @hqdicq, @DaniilPletnev, @Ya_umit, @tim_utt")
+    question = 'Опрос на крутую стрелялку два. Посмотри во сколько создан опрос и выбери вариант ответа.'
+    options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня']
     poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
     print(poll)
 
@@ -36,16 +45,19 @@ def dota(message):
 def lexa(message):
     bot.send_message(message.chat.id, "Привет, вы вызвали ЛЕХУ-ЗОМБИ")
 
-@bot.message_handler(commands=['tatar'])
-def tatar(message):
-    bot.send_message(message.chat.id, "@hqdicq хотел бы ЛЕХЕ отсосать? (я леха)")
+@bot.message_handler(commands=['pivo'])
+def pivo(message):
+    choise_list = ['Да, сделай это!', 'Нет, не делай этого, не надо дядя']
+    random_answer = random.choice(choise_list)
+    bot.send_message(message.chat.id, f"Если ты думал попить пивка, сходить покакать или поиграть в компик, то я скажу тебе: \n{random_answer}")
 
 bot.set_my_commands([
-    types.BotCommand("start", "Запустить бота"),
-    types.BotCommand("help", "Показать список команд"),
-    types.BotCommand("dota", "Опросник по доте"),
-    types.BotCommand("lexa", "Поздороваться с ЛЕХА ЗОМБИ"),
-    types.BotCommand("tatar", "Предложить татарину отсосать лехе (мне)")
+    types.BotCommand("start",   "Запустить бота"),
+    types.BotCommand("help",    "Показать список команд"),
+    types.BotCommand("dota",    "Опросник по доте"),
+    types.BotCommand("cs",      "Опросник по контер стрике"),
+    types.BotCommand("lexa",    "Поздороваться с ЛЕХА ЗОМБИ"),
+    types.BotCommand("pivo",    "Рандомайзер, думаешь попить пивка или нет? - запускай")
 ])
 
 bot.polling()
