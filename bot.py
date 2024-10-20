@@ -1,23 +1,24 @@
 import pass_bot
 import random
+
 from telebot import types
-#@bebrazin_bot
+
 bot = pass_bot.bot
+ai_token = pass_bot.huggingface_token
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    #markup = types.ReplyKeyboardMarkup()
-    #itembtn1 = types.KeyboardButton('/help')
-    #markup.add(itembtn1)
+    markup = types.ReplyKeyboardMarkup()
+    itembtn1 = types.KeyboardButton('/help')
+    markup.add(itembtn1)
     bot.send_message(message.chat.id, "Привет, я бот ЛЕХА. Напиши /help, чтобы узнать мои команды.")#, reply_markup=markup)
 
 @bot.message_handler(commands=['help'])
 def help(message):
-    #markup = types.ReplyKeyboardMarkup()
-    #itembtn1 = types.KeyboardButton('/dota - запускает крутой опросник для игры в доту 2')
-    #itembtn2 = types.KeyboardButton('/lexa - можно круто призвать леху зомби')
-    #itembtn3 = types.KeyboardButton('/tatar - можно круто предложить татарину отсосать')
-    #markup.add(itembtn1, itembtn2, itembtn3)
+    markup = types.ReplyKeyboardMarkup()
+    dota = types.KeyboardButton('/dota')
+    cs = types.KeyboardButton('/cs')
+    markup.add(dota, cs)
     bot.send_message(message.chat.id, "Мои команды:"
                                       "\n1. /start  -   запускает бота"
                                       "\n2. /dota   -   Опросник по доте (только для крутых)"
@@ -27,17 +28,17 @@ def help(message):
 
 @bot.message_handler(commands=['dota'])
 def dota(message):
-    bot.send_message(message.chat.id, "@rshchetnikov, @hqdicq, @DaniilPletnev, @Ya_umit, @tim_utt")
+    bot.send_message(message.chat.id, pass_bot.users)
     question = 'Опрос на крутую игру два. Посмотри во сколько создан опрос и выбери вариант ответа.'
-    options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня']
+    options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в каэс два']
     poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
     print(poll)
 
 @bot.message_handler(commands=['cs'])
 def cs(message):
-    bot.send_message(message.chat.id, "@rshchetnikov, @hqdicq, @DaniilPletnev, @Ya_umit, @tim_utt")
+    bot.send_message(message.chat.id, pass_bot.users)
     question = 'Опрос на крутую стрелялку два. Посмотри во сколько создан опрос и выбери вариант ответа.'
-    options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня']
+    options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в дотан два']
     poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
     print(poll)
 
@@ -49,7 +50,20 @@ def lexa(message):
 def pivo(message):
     choise_list = ['Да, сделай это!', 'Нет, не делай этого, не надо дядя']
     random_answer = random.choice(choise_list)
-    bot.send_message(message.chat.id, f"Если ты думал попить пивка, сходить покакать или поиграть в компик, то я скажу тебе: \n{random_answer}")
+    bot.send_message(message.chat.id, f"Если ты думал попить пивка, сходить покакать или поиграть в компик, "
+                                      f"то я скажу тебе: \n{random_answer}")
+
+@bot.message_handler(func=lambda message: True)
+def handle_message(message):
+    user = message.from_user
+    chat_id = message.chat.id
+    try:
+        if message.text.lower() == 'привет леха!':
+            bot.send_message(chat_id, f"Привет, @{user.username}!")
+        else:
+            pass
+    except:
+        pass
 
 bot.set_my_commands([
     types.BotCommand("start",   "Запустить бота"),
