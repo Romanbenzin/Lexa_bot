@@ -4,7 +4,6 @@ import random
 from telebot import types
 
 bot = pass_bot.bot
-ai_token = pass_bot.huggingface_token
 
 @bot.message_handler(commands=['start'])
 def start(message):
