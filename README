@@ -1,4 +1,4 @@
-#Установить все зависимости
+# Установить все зависимости
 pip install -r requirements.txt
 
 "Удалены файлы, перечисленные в .gitignore"
@@ -6,11 +6,11 @@ git rm -r --cached .
 git add .
 git commit -m
 
-#Удалить из отслеживания гитом файлы
+# Удалить из отслеживания гитом файлы
 git rm --cached .\pass_bot.py
 git rm --cached .\draft.py
 
-#Документация по боту
+# Документация по боту
 https://pytba.readthedocs.io/ru/latest/quick_start.html
 
 
@@ -27,16 +27,18 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 
-
+# Запустить поочередно и обновления будут приняты
 sudo systemctl daemon-reload
-sudo systemctl start mybot.service
 sudo systemctl stop mybot.service
+sudo systemctl start mybot.service
 sudo systemctl status mybot.service
 sudo systemctl enable mybot.service
 
 /etc/systemd/system
 
 
-Обновить ветку из папки Lexa_bot
-git remote add origin https://github.com/Romanbenzin/Lexa_bot.git
+# Обновить ветку из папки Lexa_bot
 git pull origin main
+
+# Если потерялся гит
+git remote add origin https://github.com/Romanbenzin/Lexa_bot.git
