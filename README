@@ -37,6 +37,6 @@ sudo systemctl enable mybot.service
 /etc/systemd/system
 
 
-Обновить ветку
+Обновить ветку из папки Lexa_bot
 git remote add origin https://github.com/Romanbenzin/Lexa_bot.git
 git pull origin main

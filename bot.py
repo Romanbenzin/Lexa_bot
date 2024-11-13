@@ -4,6 +4,8 @@ import random
 
 from telebot import types
 
+from pass_bot import users_without_yana
+
 bot = pass_bot.bot
 
 @bot.message_handler(commands=['start'])
@@ -24,7 +26,10 @@ def help(message):
                                       "\n2. /dota   -   Опросник по доте (только для крутых)"
                                       "\n3. /cs     -   Опросник по контре (только для крутых)"
                                       "\n4. /lexa   -   Поздороваться с ЛЕХОЙ (ЗОМБИ)"
-                                      "\n5. /pivo   -   Рандомайзер, думаешь попить пивка или нет? - запускай")#, reply_markup=markup)
+                                      "\n5. /pivo   -   Рандомайзер, думаешь попить пивка или нет? - запускай"
+                                      "\n6. /sosal  -   Узнать у рандомного участника сосал ли он."
+                     )#, reply_markup=markup)
+
 
 @bot.message_handler(commands=['dota'])
 def dota(message):
@@ -53,6 +58,11 @@ def pivo(message):
     bot.send_message(message.chat.id, f"Если ты думал попить пивка, сходить покакать или поиграть в компик, "
                                       f"то я скажу тебе: \n{random_answer}")
 
+@bot.message_handler(commands=['sosal'])
+def sosal(message):
+    user = random.choice(users_without_yana)
+    bot.send_message(message.chat.id, f"{user} сосал?")
+
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
     user = message.from_user
@@ -71,7 +81,8 @@ bot.set_my_commands([
     types.BotCommand("dota",    "Опросник по доте"),
     types.BotCommand("cs",      "Опросник по контер стрике"),
     types.BotCommand("lexa",    "Поздороваться с ЛЕХА ЗОМБИ"),
-    types.BotCommand("pivo",    "Рандомайзер, думаешь попить пивка или нет? - запускай")
+    types.BotCommand("pivo",    "Рандомайзер, думаешь попить пивка или нет? - запускай"),
+    types.BotCommand("sosal",   "Узнать у рандомного участника сосал ли он")
 ])
 
 bot.polling()
