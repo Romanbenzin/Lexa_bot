@@ -1,5 +1,6 @@
 import pass_bot
 import random
+#import yandexcloud import ai
 
 from telebot import types
 
