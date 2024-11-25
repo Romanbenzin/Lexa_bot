@@ -1,4 +1,5 @@
 pyTelegramBotAPI    #Бот для телеграмм
 flake8              #Проверить форматирование кода
+requests            #Запросы
 
 # yandexcloud

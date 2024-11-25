@@ -1,3 +1,5 @@
+import requests
+
 import pass_bot
 import random
 #import yandexcloud import ai
@@ -15,8 +17,8 @@ def start(message):
     markup.add(itembtn1)
     bot.send_message(message.chat.id, "Привет, я бот ЛЕХА. Напиши /help, чтобы узнать мои команды.")#, reply_markup=markup)
 
-@bot.message_handler(commands=['help'])
-def help(message):
+@bot.message_handler(commands=['bot_help'])
+def bot_help(message):
     markup = types.ReplyKeyboardMarkup()
     dota = types.KeyboardButton('/dota')
     cs = types.KeyboardButton('/cs')
@@ -28,6 +30,7 @@ def help(message):
                                       "\n4. /lexa   -   Поздороваться с ЛЕХОЙ (ЗОМБИ)"
                                       "\n5. /pivo   -   Рандомайзер, думаешь попить пивка или нет? - запускай"
                                       "\n6. /sosal  -   Узнать у рандомного участника сосал ли он."
+                                      "\n7. /weather_izh - Узнать погоду в ижевске"
                      )#, reply_markup=markup)
 
 
@@ -63,6 +66,13 @@ def sosal(message):
     user = random.choice(users_without_yana)
     bot.send_message(message.chat.id, f"{user} сосал?")
 
+@bot.message_handler(commands=['weather_izh'])
+def weather_izh(message):
+    response = requests.get('https://api.open-meteo.com/v1/forecast?latitude=56.8498&longitude=53.2045&hourly=temperature_2m&forecast_days=1')
+    list_of_temperature = response.json()['hourly']['temperature_2m']
+    bot.send_message(message.chat.id, f"Минимальная температура сегодня в Ижевске : {min(list_of_temperature)}")
+    bot.send_message(message.chat.id, f"Максимальная температура сегодня в Ижевске : {max(list_of_temperature)}")
+
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
     user = message.from_user
@@ -77,12 +87,13 @@ def handle_message(message):
 
 bot.set_my_commands([
     types.BotCommand("start",   "Запустить бота"),
-    types.BotCommand("help",    "Показать список команд"),
+    types.BotCommand("bot_help",    "Показать список команд"),
     types.BotCommand("dota",    "Опросник по доте"),
     types.BotCommand("cs",      "Опросник по контер стрике"),
     types.BotCommand("lexa",    "Поздороваться с ЛЕХА ЗОМБИ"),
     types.BotCommand("pivo",    "Рандомайзер, думаешь попить пивка или нет? - запускай"),
-    types.BotCommand("sosal",   "Узнать у рандомного участника сосал ли он")
+    types.BotCommand("sosal",   "Узнать у рандомного участника сосал ли он"),
+    types.BotCommand("weather_izh",   "Узнать погоду в ижевске")
 ])
 
 bot.polling()
