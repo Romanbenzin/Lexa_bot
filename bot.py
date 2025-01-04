@@ -30,7 +30,8 @@ def bot_help(message):
                                       "\n4. /lexa   -   Поздороваться с ЛЕХОЙ (ЗОМБИ)"
                                       "\n5. /pivo   -   Рандомайзер, думаешь попить пивка или нет? - запускай"
                                       "\n6. /sosal  -   Узнать у рандомного участника сосал ли он."
-                                      "\n7. /weather_izh - Узнать погоду в ижевске"
+                                      "\n7. /uebishche  -   Узнать кто уебище"
+                                      "\n8. /weather_izh - Узнать погоду в ижевске"
                      )#, reply_markup=markup)
 
 
@@ -66,6 +67,11 @@ def sosal(message):
     user = random.choice(users_without_yana)
     bot.send_message(message.chat.id, f"{user} сосал?")
 
+@bot.message_handler(commands=['uebishche'])
+def sosal(message):
+    user = random.choice(users_without_yana)
+    bot.send_message(message.chat.id, f"Уебище это: {user}")
+
 @bot.message_handler(commands=['weather_izh'])
 def weather_izh(message):
     response = requests.get('https://api.open-meteo.com/v1/forecast?latitude=56.8498&longitude=53.2045&hourly=temperature_2m&forecast_days=1')
@@ -93,6 +99,7 @@ bot.set_my_commands([
     types.BotCommand("lexa",    "Поздороваться с ЛЕХА ЗОМБИ"),
     types.BotCommand("pivo",    "Рандомайзер, думаешь попить пивка или нет? - запускай"),
     types.BotCommand("sosal",   "Узнать у рандомного участника сосал ли он"),
+    types.BotCommand("uebishche",   "Узнать кто уебище"),
     types.BotCommand("weather_izh",   "Узнать погоду в ижевске")
 ])
 
