@@ -1,3 +1,5 @@
+from random import randint
+
 import requests
 
 import pass_bot
@@ -32,6 +34,7 @@ def bot_help(message):
                                       "\n6. /sosal  -   Узнать у рандомного участника сосал ли он."
                                       "\n7. /uebishche  -   Узнать кто уебище"
                                       "\n8. /weather_izh - Узнать погоду в ижевске"
+                                      "\n9. /roll-n - Кинуть ролл. n - от 1 до n"
                      )#, reply_markup=markup)
 
 
@@ -79,6 +82,36 @@ def weather_izh(message):
     bot.send_message(message.chat.id, f"Минимальная температура сегодня в Ижевске : {min(list_of_temperature)}")
     bot.send_message(message.chat.id, f"Максимальная температура сегодня в Ижевске : {max(list_of_temperature)}")
 
+
+@bot.message_handler(func=lambda message: message.text and message.text.startswith('/roll-'))
+def roll_with_arg(message):
+    try:
+        # Лог для отладки
+        print(f"Получено сообщение: {message.text}")
+
+        # Извлекаем значение n из команды
+        command_parts = message.text.split('-')
+        if len(command_parts) != 2 or not command_parts[1].isdigit():
+            bot.send_message(message.chat.id,
+                             "Пожалуйста, используйте команду в формате /roll-n, где n - максимальное число.")
+            return
+
+        n = int(command_parts[1])
+        if n < 1:
+            bot.send_message(message.chat.id, "Число n должно быть больше 0.")
+            return
+
+        # Генерируем случайное число
+        number = random.randint(1, n)
+        bot.send_message(message.chat.id, f"Вы выбросили число: {number}")
+    except Exception as e:
+        print(f"Ошибка: {e}")  # Логирование ошибки
+        bot.send_message(message.chat.id, f"Произошла ошибка: {e}")
+
+@bot.message_handler(commands=['roll'])
+def roll(message):
+    bot.send_message(message.chat.id, "Пожалуйста, используйте команду в формате /roll-n, где n - максимальное число.")
+
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
     user = message.from_user
@@ -100,7 +133,8 @@ bot.set_my_commands([
     types.BotCommand("pivo",    "Рандомайзер, думаешь попить пивка или нет? - запускай"),
     types.BotCommand("sosal",   "Узнать у рандомного участника сосал ли он"),
     types.BotCommand("uebishche",   "Узнать кто уебище"),
-    types.BotCommand("weather_izh",   "Узнать погоду в ижевске")
+    types.BotCommand("weather_izh",   "Узнать погоду в ижевске"),
+    types.BotCommand("roll",   "Кинуть ролл")
 ])
 
 bot.polling()
