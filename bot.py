@@ -6,7 +6,8 @@ import random
 from telebot import types
 
 from pass_bot import users_without_yana
-from requests_to_deepseek import api_request
+from deepseek.requests_to_deepseek import api_request
+from team_speak.team_speak_server import status_server
 
 bot = pass_bot.bot
 
@@ -34,6 +35,7 @@ def bot_help(message):
                                       "\n8. /weather_izh - Узнать погоду в ижевске"
                                       "\n9. /roll-n - Кинуть ролл. n - от 1 до n"
                                       "\n10. /i - запрос в deepseek"
+                                      "\n11. /teamspeak_status - статус teamspeak сервера"
                      )#, reply_markup=markup)
 
 
@@ -145,6 +147,11 @@ def roll_with_arg(message):
 def roll(message):
     bot.send_message(message.chat.id, "Пожалуйста, используйте команду в формате /roll-n, где n - максимальное число.")
 
+@bot.message_handler(commands=['teamspeak_status'])
+def teamspeak_status(message):
+    response = status_server()
+    bot.send_message(message.chat.id, f"Статус сервера teamspeak: {response}")
+
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
     user = message.from_user
@@ -168,7 +175,8 @@ bot.set_my_commands([
     types.BotCommand("uebishche",   "Узнать кто уебище"),
     types.BotCommand("weather_izh",   "Узнать погоду в ижевске"),
     types.BotCommand("roll",   "Кинуть ролл"),
-    types.BotCommand("i",   "Запрос к deepseek")
+    types.BotCommand("i",   "Запрос к deepseek"),
+    types.BotCommand("teamspeak_status",   "Узнать статус сервера ts")
 ])
 
 bot.polling()
