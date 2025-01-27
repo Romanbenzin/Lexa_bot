@@ -33,7 +33,7 @@ def bot_help(message):
                                       "\n7. /uebishche  -   Узнать кто уебище"
                                       "\n8. /weather_izh - Узнать погоду в ижевске"
                                       "\n9. /roll-n - Кинуть ролл. n - от 1 до n"
-                                      "\n10. /ii_request - запрос в deepseek"
+                                      "\n10. /i - запрос в deepseek"
                      )#, reply_markup=markup)
 
 
@@ -81,7 +81,7 @@ def weather_izh(message):
     bot.send_message(message.chat.id, f"Минимальная температура сегодня в Ижевске : {min(list_of_temperature)}")
     bot.send_message(message.chat.id, f"Максимальная температура сегодня в Ижевске : {max(list_of_temperature)}")
 
-@bot.message_handler(func=lambda message: message.text and message.text.startswith('/ii_request'))
+@bot.message_handler(func=lambda message: message.text and message.text.startswith('/i'))
 def request_to_ii(message):
     try:
         # Лог для отладки
@@ -90,7 +90,7 @@ def request_to_ii(message):
         # Извлекаем текст запроса из команды
         command_parts = message.text.split(maxsplit=1)  # Разделяем команду и текст запроса
         if len(command_parts) < 2:
-            bot.send_message(message.chat.id, "Пожалуйста, укажите текст запроса после команды /ii_request.")
+            bot.send_message(message.chat.id, "Пожалуйста, укажите текст запроса после команды /i")
             return
 
         user_request = command_parts[1].strip()  # Текст запроса
@@ -168,7 +168,7 @@ bot.set_my_commands([
     types.BotCommand("uebishche",   "Узнать кто уебище"),
     types.BotCommand("weather_izh",   "Узнать погоду в ижевске"),
     types.BotCommand("roll",   "Кинуть ролл"),
-    types.BotCommand("ii_request",   "Запрос к deepseek")
+    types.BotCommand("i",   "Запрос к deepseek")
 ])
 
 bot.polling()
