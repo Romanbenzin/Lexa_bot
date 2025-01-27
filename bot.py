@@ -1,14 +1,12 @@
-from random import randint
-
 import requests
 
 import pass_bot
 import random
-#import yandexcloud import ai
 
 from telebot import types
 
 from pass_bot import users_without_yana
+from requests_to_deepseek import api_request
 
 bot = pass_bot.bot
 
@@ -35,6 +33,7 @@ def bot_help(message):
                                       "\n7. /uebishche  -   Узнать кто уебище"
                                       "\n8. /weather_izh - Узнать погоду в ижевске"
                                       "\n9. /roll-n - Кинуть ролл. n - от 1 до n"
+                                      "\n10. /ii_request - запрос в deepseek"
                      )#, reply_markup=markup)
 
 
@@ -82,6 +81,40 @@ def weather_izh(message):
     bot.send_message(message.chat.id, f"Минимальная температура сегодня в Ижевске : {min(list_of_temperature)}")
     bot.send_message(message.chat.id, f"Максимальная температура сегодня в Ижевске : {max(list_of_temperature)}")
 
+@bot.message_handler(func=lambda message: message.text and message.text.startswith('/ii_request'))
+def request_to_ii(message):
+    try:
+        # Лог для отладки
+        print(f"Получено сообщение: {message.text}")
+
+        # Извлекаем текст запроса из команды
+        command_parts = message.text.split(maxsplit=1)  # Разделяем команду и текст запроса
+        if len(command_parts) < 2:
+            bot.send_message(message.chat.id, "Пожалуйста, укажите текст запроса после команды /ii_request.")
+            return
+
+        user_request = command_parts[1].strip()  # Текст запроса
+        if not user_request:
+            bot.send_message(message.chat.id, "Запрос не может быть пустым.")
+            return
+
+        # Формируем запрос к DeepSeek
+        response = api_request(user_request)
+
+        # Обработка ответа
+        if response.status_code == 200:
+            answer = response.json()["choices"][0]["message"]["content"]
+            bot.send_message(message.chat.id, answer)
+        else:
+            bot.send_message(message.chat.id, f"Ошибка при запросе к API: {response.status_code}")
+
+        print("Запрос:", message.text)
+        print("Ответ:", response.status_code, response.text)
+
+    except Exception as e:
+        # Логируем ошибку
+        print(f"Ошибка: {e}")
+        bot.send_message(message.chat.id, "Произошла ошибка при обработке запроса.")
 
 @bot.message_handler(func=lambda message: message.text and message.text.startswith('/roll-'))
 def roll_with_arg(message):
@@ -134,7 +167,8 @@ bot.set_my_commands([
     types.BotCommand("sosal",   "Узнать у рандомного участника сосал ли он"),
     types.BotCommand("uebishche",   "Узнать кто уебище"),
     types.BotCommand("weather_izh",   "Узнать погоду в ижевске"),
-    types.BotCommand("roll",   "Кинуть ролл")
+    types.BotCommand("roll",   "Кинуть ролл"),
+    types.BotCommand("ii_request",   "Запрос к deepseek")
 ])
 
 bot.polling()
