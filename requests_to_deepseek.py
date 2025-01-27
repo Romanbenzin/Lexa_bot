@@ -12,7 +12,7 @@ def api_request(request):
     }
 
     data = {
-        "model": "deepseek-chat",  # Укажи нужную модель
+        "model": "deepseek-chat",  # Укажи нужную модель. Можно переключить на deepseek-reasoner
         "messages": [
             {"role": "user", "content": f"{request}. Ответь в кратце, буквально в пару предложений, но чтобы смысл не был потерян."}
         ]
