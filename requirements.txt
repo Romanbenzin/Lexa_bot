@@ -1,5 +1,5 @@
-pyTelegramBotAPI    #Бот для телеграмм
-flake8              #Проверить форматирование кода
-requests            #Запросы
+pyTelegramBotAPI==4.23.0    #Бот для телеграмм
+flake8==7.1.1               #Проверить форматирование кода
+requests==2.32.3            #Запросы
+python-dotenv==1.0.1        #env файл
 
-# yandexcloud

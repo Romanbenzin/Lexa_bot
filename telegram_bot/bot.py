@@ -1,10 +1,7 @@
 import requests
-
 import pass_bot
 import random
-
 from telebot import types
-
 from pass_bot import users_without_yana
 from deepseek.requests_to_deepseek import api_request
 from team_speak.team_speak_server import status_server

@@ -1,9 +1,11 @@
-from pass_bot import API_KEY_DEEPSEEK
+import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+API_KEY_DEEPSEEK = os.getenv("API_KEY_TEAMSPEAK")
 
 URL_DEEPSEEK = "https://api.deepseek.com/v1/chat/completions"
-
-
 
 def api_request(request):
     headers = {

@@ -36,9 +36,18 @@ sudo systemctl enable mybot.service
 
 /etc/systemd/system
 
-
 # Обновить ветку из папки Lexa_bot
 git pull origin main
 
 # Если потерялся гит
 git remote add origin https://github.com/Romanbenzin/Lexa_bot.git
+
+# Переезд в докер:
+docker build -t bot .           # Сделать образ на основе dockerfile
+docker ps                       # Проверить запущенные контейнеры
+docker ps -a                    # Проверить все контейнеры
+docker images                   # Все контейнеры
+docker run -it bot              # Запустить контейнер
+docker run -d bot               # Запустить контейнер фоново
+docker stop c23622dbdeda        # Остановить контейнер по ID
+

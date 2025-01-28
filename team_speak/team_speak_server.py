@@ -1,6 +1,9 @@
+import os
 import requests
+from dotenv import load_dotenv
 
-from pass_bot import API_KEY_TEAMSPEAK
+load_dotenv()
+API_KEY_TEAMSPEAK = os.getenv("API_KEY_TEAMSPEAK")
 
 ADDRESS_SERVER = "http://156.67.63.180:10080/1/serverlist"
 
