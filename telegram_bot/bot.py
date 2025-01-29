@@ -5,6 +5,7 @@ from telebot import types
 from pass_bot import users_without_yana
 from deepseek.requests_to_deepseek import api_request
 from team_speak.team_speak_server import status_server
+from telegram_bot.pass_bot import users
 
 bot = pass_bot.bot
 
@@ -38,7 +39,8 @@ def bot_help(message):
 
 @bot.message_handler(commands=['dota'])
 def dota(message):
-    bot.send_message(message.chat.id, pass_bot.users)
+    for user in pass_bot.users:
+        bot.send_message(message.chat.id, user)
     question = 'Опрос на крутую игру два. Посмотри во сколько создан опрос и выбери вариант ответа.'
     options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в каэс два']
     poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
@@ -46,7 +48,8 @@ def dota(message):
 
 @bot.message_handler(commands=['cs'])
 def cs(message):
-    bot.send_message(message.chat.id, pass_bot.users)
+    for user in pass_bot.users:
+        bot.send_message(message.chat.id, user)
     question = 'Опрос на крутую стрелялку два. Посмотри во сколько создан опрос и выбери вариант ответа.'
     options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в дотан два']
     poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
