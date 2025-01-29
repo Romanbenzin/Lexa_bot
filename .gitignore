@@ -3,6 +3,5 @@ telegram_bot/pass_bot.py
 test.py
 .env
 telegram_bot/
-team_speak/__pycache__
-deepseek/__pycache__
-__pycache__
+__pycache__/
+*.py[cod]
