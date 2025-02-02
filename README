@@ -13,7 +13,6 @@ git rm --cached .\draft.py
 # Документация по боту
 https://pytba.readthedocs.io/ru/latest/quick_start.html
 
-
 [Unit]
 Description=My Bot Service
 After=network.target
@@ -54,6 +53,7 @@ docker container prune                          # Удалить не запущ
 
 # Запустить бота руками:
 $env:PYTHONPATH="."; telegram_bot/python3 bot.py
+python telegram_bot/bot.py
 
 # При обновлении:
 1. из папки с ботом:
@@ -68,3 +68,41 @@ sudo docker image ls
 sudo docker rmi ddf9f47f661d
 6. Запустить бота:
 sudo docker run -d --restart unless-stopped bot
+
+
+# SQL
+postgresql-x64-15
+sudo service postgresql start
+
+# Для кодировки в терминале:
+chcp 1251
+
+# Подключиться к базе:
+psql -U postgres -d my_bot_db
+
+# Создал базу:
+CREATE DATABASE my_bot_db;
+# Переключился на базу:
+\c my_bot_db;
+# Создал таблицу:
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    user_name TEXT NOT NULL,
+    sucker BOOLEAN DEFAULT TRUE
+);
+# Таблицы:
+\dt
+# Удалить таблицу:
+DROP TABLE users;
+
+# Добавить столбец
+ALTER TABLE users ADD COLUMN "Sucker" BOOLEAN SET default TRUE;
+
+# Добавить в таблицу:
+INSERT INTO users (user_name) VALUES ('@rshchetnikov');
+INSERT INTO users (user_name) VALUES ('@hqdicq');
+INSERT INTO users (user_name) VALUES ('@DaniilPletnev');
+INSERT INTO users (user_name) VALUES ('@tim_utt');
+INSERT INTO users (user_name) VALUES ('@ivanfrosty22');
+INSERT INTO users (user_name) VALUES ('@sanbvoker');
+INSERT INTO users (user_name, sucker) VALUES ('@Ya_umit', false);

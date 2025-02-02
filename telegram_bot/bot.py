@@ -5,8 +5,8 @@ from telebot import types
 from pass_bot import users_without_yana
 from deepseek.requests_to_deepseek import api_request
 from team_speak.team_speak_server import status_server
+from data_base.data_base_actions import get_all_uses_name, get_all_uses_name_without_yana
 from telegram_bot.helpers import list_formatter
-from telegram_bot.pass_bot import users
 
 bot = pass_bot.bot
 
@@ -35,6 +35,7 @@ def bot_help(message):
                                       "\n9. /roll-n - Кинуть ролл. n - от 1 до n"
                                       "\n10. /i - запрос в deepseek"
                                       "\n11. /teamspeak_status - статус teamspeak сервера"
+                                      "\n12. /db - База данных"
                      )#, reply_markup=markup)
 
 
@@ -71,9 +72,14 @@ def sosal(message):
     bot.send_message(message.chat.id, f"{user} сосал?")
 
 @bot.message_handler(commands=['uebishche'])
-def sosal(message):
+def uebishche(message):
     user = random.choice(users_without_yana)
     bot.send_message(message.chat.id, f"Уебище это: {user}")
+
+@bot.message_handler(commands=['db'])
+def db(message):
+    bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
+    bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
 
 @bot.message_handler(commands=['weather_izh'])
 def weather_izh(message):
