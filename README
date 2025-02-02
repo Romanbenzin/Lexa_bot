@@ -99,10 +99,4 @@ DROP TABLE users;
 ALTER TABLE users ADD COLUMN "Sucker" BOOLEAN SET default TRUE;
 
 # Добавить в таблицу:
-INSERT INTO users (user_name) VALUES ('@rshchetnikov');
-INSERT INTO users (user_name) VALUES ('@hqdicq');
-INSERT INTO users (user_name) VALUES ('@DaniilPletnev');
-INSERT INTO users (user_name) VALUES ('@tim_utt');
-INSERT INTO users (user_name) VALUES ('@ivanfrosty22');
-INSERT INTO users (user_name) VALUES ('@sanbvoker');
-INSERT INTO users (user_name, sucker) VALUES ('@Ya_umit', false);
+INSERT INTO users (user_name) VALUES ('@user_name');
