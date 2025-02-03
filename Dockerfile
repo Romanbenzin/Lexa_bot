@@ -7,6 +7,13 @@ WORKDIR /app
 # Копируем зависимости проекта
 COPY requirements.txt .
 
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Устанавливаем зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
