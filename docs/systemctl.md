@@ -9,14 +9,14 @@
 - /etc/systemd/system
 
 [Unit]
-Description=My Bot Service
-After=network.target
+    Description=My Bot Service
+    After=network.target
 
 [Service]
-User=benzin
-WorkingDirectory=/home/benzin/Lexa_bot
-ExecStart=/usr/bin/python3 /home/benzin/Lexa_bot/bot.py
-Restart=always
+    User=benzin
+    WorkingDirectory=/home/benzin/Lexa_bot
+    ExecStart=/usr/bin/python3 /home/benzin/Lexa_bot/bot.py
+    Restart=always
 
 [Install]
-WantedBy=multi-user.target
+    WantedBy=multi-user.target

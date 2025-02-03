@@ -1,81 +1,54 @@
 # SQL
-postgresql-x64-15
-sudo service postgresql start
+    postgresql-x64-15
+    sudo service postgresql start
 
 # Для кодировки в терминале:
-chcp 1251
+    chcp 1251
 
 # Подключиться к базе:
-psql -U postgres -d my_bot_db
+    psql -U postgres -d my_bot_db
 
 # Создал базу:
-CREATE DATABASE my_bot_db;
+    CREATE DATABASE my_bot_db;
 # Переключился на базу:
-\c my_bot_db;
+    \c my_bot_db;
 # Создал таблицу:
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    user_name TEXT NOT NULL,
-    sucker BOOLEAN DEFAULT TRUE
-);
+    CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
+        user_name TEXT NOT NULL,
+        sucker BOOLEAN DEFAULT TRUE
+    );
 
-CREATE TABLE purchases (
-    id SERIAL PRIMARY KEY,
-    user_ids TEXT NOT NULL,
-    steam_link TEXT NOT NULL,
-    purchase_date DATE NOT NULL
-);
+    CREATE TABLE purchases (
+        id SERIAL PRIMARY KEY,
+        user_ids TEXT NOT NULL,
+        steam_link TEXT NOT NULL,
+        purchase_date DATE NOT NULL
+    );
 
 # Таблицы:
-\dt
+    \dt
 # Удалить таблицу:
-DROP TABLE users;
+    DROP TABLE users;
 
 # Добавить столбец
-ALTER TABLE users ADD COLUMN "Sucker" BOOLEAN SET default TRUE;
-ALTER TABLE purchases ADD COLUMN purchase_date DATE;
+    ALTER TABLE users ADD COLUMN "Sucker" BOOLEAN SET default TRUE;
+    ALTER TABLE purchases ADD COLUMN purchase_date DATE;
 
 # Добавить в таблицу:
     INSERT INTO users (user_name) VALUES ('@user_name');
-    INSERT INTO purchases (user_name) VALUES ('@user_name');
-
-    INSERT INTO purchases (user_ids, steam_link, purchase_month) VALUES ('1', 'https://store.steampowered.com/app/123', '2023-10');
+    INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/3159330/Assassins_Creed_Shadows/', '2025-01-29');
 
 # Запрос для даты покупки:
     SELECT id, user_ids, steam_link, TO_CHAR(purchase_date, 'YYYY-MM') AS purchase_month FROM purchases;
 
-
-
-INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/3159330/Assassins_Creed_Shadows/', '2025-01-29');
-INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2', 'https://store.steampowered.com/app/1426210/It_Takes_Two/', '2025-01-29');
-INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/2473480/Tails_of_Iron_2_Whiskers_of_Winter/', '2025-01-29');
-INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/1608070/CRISIS_CORE_FINAL_FANTASY_VII_REUNION/', '2025-02-01');
-INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/', '2025-02-01');
-INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/1373960/INDIKA/', '2025-02-01');
-INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/534380/Dying_Light_2_Stay_Human_Reloaded_Edition/', '2025-02-01');
-INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1', 'https://store.steampowered.com/app/1062830/Embr/', '2025-02-02');
-
-
+# Выбрать каждого, кто скидывался на игру
+    SELECT *
+    FROM users
+    INNER JOIN purchases p ON users.id = ANY(string_to_array(p.user_ids, ',')::int[]);
 
 # Снять дамп
     pg_dump -U postgres -h localhost -d my_bot_db --encoding=UTF8 -f lexa_dump.sql
 
-
-pg_dump -U postgres -h localhost -d my_bot_db -F c -b -v -f lexa_dump.sql
-
-scp C:\lexa_bot\Lexa_bot\lexa_dump.sql benzin@156.67.63.180:/home/benzin/Lexa_bot
-
-pg_restore -U postgres -h localhost -d my_bot_db -v lexa_dump.sql
-
-
-docker exec -t lexa_bot-db-1 pg_dump -U postgres -d my_bot_db > lexa_dump.sql
-
-
-docker exec -it d39c4ffe68e5 psql -U postgres -d my_bot_db
-
-
-docker cp lexa_dump.sql d39c4ffe68e5:/lexa_dump.sql
-docker exec -i d39c4ffe68e5 psql -U postgres -d my_bot_db < lexa_dump.sql
-
-
-
+# Отправить дамп на сервер
+    scp C:\lexa_bot\Lexa_bot\lexa_dump.sql benzin@156.67.63.180:/home/benzin/Lexa_bot/lexa_dump.sql
