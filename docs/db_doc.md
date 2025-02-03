@@ -36,34 +36,46 @@ ALTER TABLE users ADD COLUMN "Sucker" BOOLEAN SET default TRUE;
 ALTER TABLE purchases ADD COLUMN purchase_date DATE;
 
 # Добавить в таблицу:
-INSERT INTO users (user_name) VALUES ('@user_name');
-INSERT INTO purchases (user_name) VALUES ('@user_name');
+    INSERT INTO users (user_name) VALUES ('@user_name');
+    INSERT INTO purchases (user_name) VALUES ('@user_name');
 
-INSERT INTO purchases (user_ids, steam_link, purchase_month) VALUES ('1', 'https://store.steampowered.com/app/123', '2023-10');
+    INSERT INTO purchases (user_ids, steam_link, purchase_month) VALUES ('1', 'https://store.steampowered.com/app/123', '2023-10');
 
-Запрос для даты покупки:
-SELECT id, user_ids, steam_link, TO_CHAR(purchase_date, 'YYYY-MM') AS purchase_month
-FROM purchases;
+# Запрос для даты покупки:
+    SELECT id, user_ids, steam_link, TO_CHAR(purchase_date, 'YYYY-MM') AS purchase_month FROM purchases;
 
 
 
 INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/3159330/Assassins_Creed_Shadows/', '2025-01-29');
 INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2', 'https://store.steampowered.com/app/1426210/It_Takes_Two/', '2025-01-29');
 INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/2473480/Tails_of_Iron_2_Whiskers_of_Winter/', '2025-01-29');
-
 INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/1608070/CRISIS_CORE_FINAL_FANTASY_VII_REUNION/', '2025-02-01');
 INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/', '2025-02-01');
 INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/1373960/INDIKA/', '2025-02-01');
 INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1, 2, 4', 'https://store.steampowered.com/app/534380/Dying_Light_2_Stay_Human_Reloaded_Edition/', '2025-02-01');
-
 INSERT INTO purchases (user_ids, steam_link, purchase_date) VALUES ('1', 'https://store.steampowered.com/app/1062830/Embr/', '2025-02-02');
 
 
-Снять дамп:
-pg_dump -U ваш_пользователь -h ваш_хост -d ваша_база -F c -b -v -f ваш_дамп.sql
+
+# Снять дамп
+    pg_dump -U postgres -h localhost -d my_bot_db --encoding=UTF8 -f lexa_dump.sql
+
 
 pg_dump -U postgres -h localhost -d my_bot_db -F c -b -v -f lexa_dump.sql
 
 scp C:\lexa_bot\Lexa_bot\lexa_dump.sql benzin@156.67.63.180:/home/benzin/Lexa_bot
 
 pg_restore -U postgres -h localhost -d my_bot_db -v lexa_dump.sql
+
+
+docker exec -t lexa_bot-db-1 pg_dump -U postgres -d my_bot_db > lexa_dump.sql
+
+
+docker exec -it d39c4ffe68e5 psql -U postgres -d my_bot_db
+
+
+docker cp lexa_dump.sql d39c4ffe68e5:/lexa_dump.sql
+docker exec -i d39c4ffe68e5 psql -U postgres -d my_bot_db < lexa_dump.sql
+
+
+

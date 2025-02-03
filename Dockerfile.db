@@ -1,0 +1,9 @@
+# Используем официальный образ PostgreSQL
+FROM postgres:latest
+
+# Копируем скрипт и дамп в контейнер
+COPY init-db.sh /docker-entrypoint-initdb.d/
+COPY lexa_dump.sql /docker-entrypoint-initdb.d/
+
+# Даем разрешение на выполнение скрипта
+RUN chmod +x /docker-entrypoint-initdb.d/init-db.sh
