@@ -17,9 +17,11 @@ sudo docker ps
 sudo docker stop ID
 4. Проверить образы:
 sudo docker image ls
-5. Удалить старый образ:
+5. Удалить контейнеры:
+sudo docker container prune
+6. Удалить старый образ:
 sudo docker rmi ddf9f47f661d
-6. Запустить бота:
+7. Запустить бота:
 sudo docker run -d --restart unless-stopped bot
 
 
