@@ -10,3 +10,4 @@
 - [pyTelegramBotAPI](docs/telegram_bot_api.md)
 - [DOCKER](docs/docker_commands.md)
 - [MANUAL](docs/manual_commands.md)
+- [.ENV](docs/example.env)
