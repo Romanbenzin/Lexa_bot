@@ -3,6 +3,6 @@ telegram_bot/pass_bot.py
 test.py
 .env
 .idea
-telegram_bot/
 __pycache__/
 *.py[cod]
+data/
