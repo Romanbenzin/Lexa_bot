@@ -1,7 +1,9 @@
-### Для работы бота нужно 2 образа:
-- [docker pull postgres](https://hub.docker.com/_/postgres)
+### После pull, нужно выполнить 2 команды
+    sudo docker-compose down -v
+    sudo docker-compose up --build -d
 
-
+### Запуск
+Создать в корневой директории файл .env по аналогии с docs/example.env
 
 ### Пользование инструментами
 - [systemctl](docs/systemctl.md)

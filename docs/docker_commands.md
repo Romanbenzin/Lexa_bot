@@ -26,25 +26,25 @@ sudo docker run -d --restart unless-stopped bot
 
 
 # docker-compose
-    docker-compose down -v                # оставить старые контейнеры
-    docker-compose up -d                  # Запустить контейнеры
-    docker ps                             # Проверить работу контейнеров
+    sudo docker-compose down -v                # оставить старые контейнеры
+    sudo docker-compose up -d                  # Запустить контейнеры
+    sudo docker ps                             # Проверить работу контейнеров
 
 # Подключиться к базе в контейнере
-    docker exec -it ff3c636d7116 psql -U postgres -d my_bot_db
+    sudo docker exec -it ff3c636d7116 psql -U postgres -d my_bot_db
 
 # Подключиться к контейнеру
-    docker exec -it ff3c636d7116 bash
+    sudo docker exec -it ff3c636d7116 bash
 
 # Перезапуск контейнеров
-    docker-compose down -v
-    docker-compose up -d
+    sudo docker-compose down -v
+    sudo docker-compose up -d
 
 # Собрать образ
-    docker-compose up --build -d
+    sudo docker-compose up --build -d
 
 # Проверить логи у постгресс контейнера 
-    docker logs 1ca95dde781d
+    sudo docker logs 1ca95dde781d
 
 # Почистить кеш в докере
     docker builder prune --all --force
@@ -52,8 +52,5 @@ sudo docker run -d --restart unless-stopped bot
 # Проверить базу в докере
     docker exec -it 3e6d79b1d85e psql -U postgres -l
 
-cp lexa_dump.sql 4181b65187c4:/lexa_dump.sql
-docker exec -it 4181b65187c4 psql -U postgres -d my_bot_db -f /lexa_dump.sql
-
 # Проверить доступность порта
-docker exec -it lexa_bot-db-1 netstat -tuln | grep 5432
+    docker exec -it lexa_bot-db-1 netstat -tuln | grep 5432
