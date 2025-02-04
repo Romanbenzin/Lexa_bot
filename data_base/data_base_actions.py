@@ -32,3 +32,19 @@ def get_all_uses_name_without_yana():
             return []
         finally:
             close_connection(connection)
+
+def add_user(user_name, sucker=True):
+    """Функция для добавления пользователя."""
+    connection = connect_to_db()
+    if connection:
+        try:
+            cursor = connection.cursor()
+            # SQL-запрос для добавления пользователя
+            cursor.execute(f"INSERT INTO users (user_name, sucker) VALUES ('@{user_name}', {sucker});")
+            users = cursor.fetchall()
+            return users
+        except Error as e:
+            print(f"Ошибка при добавлении пользователя: {e}")
+            return []
+        finally:
+            close_connection(connection)

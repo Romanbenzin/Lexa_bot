@@ -8,8 +8,9 @@ services:  # Секции с сервисами (контейнерами)
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Переменная окружения для пароля базы данных
       POSTGRES_DB: ${POSTGRES_DB}  # Переменная окружения для имени базы данных
     volumes:  # Монтирование директорий из хоста в контейнер
-      - ./data:/var/lib/postgresql/data  # Монтирование данных базы данных (постоянное хранилище)
+      #- ./data:/var/lib/postgresql/data  # Монтирование данных базы данных (постоянное хранилище)
       - ./lexa_dump.sql:/docker-entrypoint-initdb.d/lexa_dump.sql  # Монтирование SQL дампа для инициализации базы данных
+      - ./postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"  # Проброс порта базы данных, чтобы можно было подключиться с хоста
     healthcheck:  # Проверка здоровья контейнера
@@ -30,6 +31,8 @@ services:  # Секции с сервисами (контейнерами)
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}  # Строка подключения к базе данных
     networks:
       - lexa_network  # Сеть для бота
+volumes:
+  postgres_data:
 
 networks:  # Настройка сети для контейнеров
   lexa_network:
