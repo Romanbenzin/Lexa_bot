@@ -53,3 +53,22 @@
 
 # Проверить доступность порта
     docker exec -it lexa_bot-db-1 netstat -tuln | grep 5432
+
+# Узнать креды:
+    docker exec -it bot env | grep POSTGRES
+
+# Посмотреть логи
+    docker logs bot --tail 50
+    docker logs -f bot
+    docker logs db
+
+# Проверить доступность контейнера
+    docker exec -it bot curl db:5432
+
+# Подключиться к python консоли
+docker exec -it bot python
+
+
+
+
+print(os.getenv("DATABASE_URL"))

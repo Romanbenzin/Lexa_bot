@@ -2,15 +2,16 @@ version: "3.8"  # Указывает версию Docker Compose файла
 services:  # Секции с сервисами (контейнерами)
   db:  # Сервис для базы данных PostgreSQL
     image: postgres:17  # Используется официальный образ PostgreSQL версии 17
+    container_name: db # Явное указание контейнера для подключения бота
     restart: always  # Контейнер будет перезапускаться всегда в случае его остановки
     environment:  # Окружение для настройки контейнера
       POSTGRES_USER: ${POSTGRES_USER}  # Переменная окружения для имени пользователя базы данных
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Переменная окружения для пароля базы данных
       POSTGRES_DB: ${POSTGRES_DB}  # Переменная окружения для имени базы данных
     volumes:  # Монтирование директорий из хоста в контейнер
-      #- ./data:/var/lib/postgresql/data  # Монтирование данных базы данных (постоянное хранилище)
-      - ./lexa_dump.sql:/docker-entrypoint-initdb.d/lexa_dump.sql  # Монтирование SQL дампа для инициализации базы данных
-      - ./postgres_data:/var/lib/postgresql/data
+      - ./data:/var/lib/postgresql/data  # Монтирование данных базы данных (постоянное хранилище)
+      # - ./lexa_dump.sql:/docker-entrypoint-initdb.d/lexa_dump.sql  # Монтирование SQL дампа для инициализации базы данных
+      # - ./postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"  # Проброс порта базы данных, чтобы можно было подключиться с хоста
     healthcheck:  # Проверка здоровья контейнера
@@ -23,11 +24,15 @@ services:  # Секции с сервисами (контейнерами)
 
   bot:  # Сервис для бота (контейнер с ботом)
     build: .  # Строим контейнер из текущей директории, где находится Dockerfile
+    container_name: bot
     restart: always  # Перезапуск контейнера всегда
     depends_on:
       db:
         condition: service_healthy  # Контейнер с ботом будет запускаться только после того, как база данных будет здоровой
     environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}  # Строка подключения к базе данных
     networks:
       - lexa_network  # Сеть для бота

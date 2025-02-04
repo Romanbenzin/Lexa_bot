@@ -8,6 +8,9 @@
 # Подключиться к базе:
     psql -U postgres -d my_bot_db
 
+# Подключиться к базе из контейнера бота
+    docker exec -it 70fabdd4f2e8 psql -h db -U postgres -d my_bot_db
+
 # Создал базу:
     CREATE DATABASE my_bot_db;
 # Переключился на базу:
@@ -52,3 +55,7 @@
 
 # Отправить дамп на сервер
     scp C:\lexa_bot\Lexa_bot\lexa_dump.sql benzin@156.67.63.180:/home/benzin/Lexa_bot/lexa_dump.sql
+
+# Подключиться к базе через бота
+    psql -h db -U postgres -d my_bot_db
+    psql -U postgres -d my_bot_db

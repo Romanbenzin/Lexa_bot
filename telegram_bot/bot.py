@@ -5,7 +5,7 @@ from telebot import types
 from pass_bot import users_without_yana
 from deepseek.requests_to_deepseek import api_request
 from team_speak.team_speak_server import status_server
-from data_base.data_base_actions import get_all_uses_name, get_all_uses_name_without_yana
+from data_base.data_base_actions import get_all_uses_name, get_all_uses_name_without_yana, add_user, delete_user
 from telegram_bot.helpers import list_formatter
 
 bot = pass_bot.bot
@@ -78,6 +78,46 @@ def uebishche(message):
 
 @bot.message_handler(commands=['db'])
 def db(message):
+    bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
+    bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
+
+@bot.message_handler(commands=['db_user_add'])
+def db_user_add(message):
+    # Разбиваем сообщение на части
+    parts = message.text.split()
+    # Проверяем, что сообщение содержит достаточно аргументов
+    if len(parts) < 2:
+        bot.reply_to(message, "Используйте: /db_user_add <имя_пользователя> <sucker (опционально, по умолчанию True)>")
+        return
+    # Извлекаем имя пользователя
+    user_name = parts[1]
+    # Извлекаем значение sucker (если указано)
+    sucker = True  # Значение по умолчанию
+    if len(parts) >= 3:
+        sucker = parts[2].lower() == "true"  # Преобразуем строку в булево значение
+    # Добавляем пользователя в базу данных
+    result = add_user(user_name, sucker)
+    # Отправляем результат пользователю
+    bot.reply_to(message, result)
+
+    bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
+    bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
+
+@bot.message_handler(commands=['db_user_delete'])
+def db_user_delete(message):
+    # Разбиваем сообщение на части
+    parts = message.text.split()
+    # Проверяем, что сообщение содержит достаточно аргументов
+    if len(parts) < 2:
+        bot.reply_to(message, "Используйте: /db_user_delete <имя_пользователя>")
+        return
+    # Извлекаем имя пользователя
+    user_name = parts[1]
+    # Удаляем пользователя из базы данных
+    result = delete_user(user_name)
+    # Отправляем результат пользователю
+    bot.reply_to(message, result)
+
     bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
     bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
 

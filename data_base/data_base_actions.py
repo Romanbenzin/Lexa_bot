@@ -40,11 +40,38 @@ def add_user(user_name, sucker=True):
         try:
             cursor = connection.cursor()
             # SQL-запрос для добавления пользователя
-            cursor.execute(f"INSERT INTO users (user_name, sucker) VALUES ('@{user_name}', {sucker});")
-            users = cursor.fetchall()
-            return users
+            cursor.execute(
+                "INSERT INTO users (user_name, sucker) VALUES (%s, %s);",
+                (f"@{user_name}", sucker)
+            )
+            connection.commit()
+            return f"Пользователь @{user_name} успешно добавлен."
         except Error as e:
-            print(f"Ошибка при добавлении пользователя: {e}")
-            return []
+            return f"Ошибка при добавлении пользователя: {e}"
         finally:
             close_connection(connection)
+    else:
+        return "Ошибка подключения к базе данных."
+
+
+def delete_user(user_name):
+    """Функция для удаления пользователя."""
+    connection = connect_to_db()
+    if connection:
+        try:
+            cursor = connection.cursor()
+            # SQL-запрос для удаления пользователя
+            cursor.execute("DELETE FROM users WHERE user_name = %s;", (f"@{user_name}",))
+            connection.commit()
+
+            # Проверяем, был ли пользователь удален
+            if cursor.rowcount > 0:
+                return f"Пользователь @{user_name} успешно удален."
+            else:
+                return f"Пользователь @{user_name} не найден в базе данных."
+        except Error as e:
+            return f"Ошибка при удалении пользователя: {e}"
+        finally:
+            close_connection(connection)
+    else:
+        return "Ошибка подключения к базе данных."
