@@ -66,9 +66,5 @@
     docker exec -it bot curl db:5432
 
 # Подключиться к python консоли
-docker exec -it bot python
-
-
-
-
-print(os.getenv("DATABASE_URL"))
+    docker exec -it bot python
+    print(os.getenv("DATABASE_URL"))

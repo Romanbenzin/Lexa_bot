@@ -59,3 +59,6 @@
 # Подключиться к базе через бота
     psql -h db -U postgres -d my_bot_db
     psql -U postgres -d my_bot_db
+
+# Тут хранятся сырые данные по базе
+    cd var/lib/postgresql/data/
