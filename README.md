@@ -16,3 +16,4 @@
 - [DOCKER](docs/docker_commands.md)
 - [MANUAL](docs/manual_commands.md)
 - [.ENV](docs/example.env)
+- [db_command]()
