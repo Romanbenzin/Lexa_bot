@@ -1,5 +1,7 @@
+import random
+
 from telebot import types
-from telegram_bot.pass_bot import users
+from telegram_bot.pass_bot import users, users_without_yana
 from telegram_bot.helpers import list_formatter
 
 class Handler:
@@ -47,3 +49,19 @@ class Handler:
         options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в дотан два']
         self.bot.send_poll(message.chat.id, question, options, is_anonymous=False)
 
+    def handle_leha(self, message):
+        self.bot.send_message(message.chat.id, "Привет, вы вызвали ЛЕХУ-ЗОМБИ")
+
+    def handle_pivo(self, message):
+        choise_list = ['Да, сделай это!', 'Нет, не делай этого, не надо дядя']
+        random_answer = random.choice(choise_list)
+        self.bot.send_message(message.chat.id, f"Если ты думал попить пивка, сходить покакать или поиграть в компик, "
+                                          f"то я скажу тебе: \n{random_answer}")
+
+    def handle_sosal(self, message):
+        user = random.choice(users_without_yana)
+        self.bot.send_message(message.chat.id, f"{user} сосал?")
+
+    def handle_uebishche(self, message):
+        user = random.choice(users_without_yana)
+        self.bot.send_message(message.chat.id, f"Уебище это: {user}")

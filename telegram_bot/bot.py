@@ -3,16 +3,17 @@ import pass_bot
 import random
 import re
 from telebot import types
-from pass_bot import users_without_yana
 from deepseek.requests_to_deepseek import api_request
 from team_speak.team_speak_server import status_server
 from data_base.data_base_actions import get_all_uses_name, get_all_uses_name_without_yana, add_user, delete_user, \
     add_game, get_game
 from telegram_bot.bot_core.bot_core import Handler
+from telegram_bot.bot_database_core.bot_database_core import DbHandler
 from telegram_bot.helpers import list_formatter
 
 bot = pass_bot.bot
 handler = Handler(bot)
+dbhandler = DbHandler(bot)
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -32,29 +33,23 @@ def cs(message):
 
 @bot.message_handler(commands=['lexa'])
 def lexa(message):
-    bot.send_message(message.chat.id, "Привет, вы вызвали ЛЕХУ-ЗОМБИ")
+    handler.handle_leha(message)
 
 @bot.message_handler(commands=['pivo'])
 def pivo(message):
-    choise_list = ['Да, сделай это!', 'Нет, не делай этого, не надо дядя']
-    random_answer = random.choice(choise_list)
-    bot.send_message(message.chat.id, f"Если ты думал попить пивка, сходить покакать или поиграть в компик, "
-                                      f"то я скажу тебе: \n{random_answer}")
+    handler.handle_pivo(message)
 
 @bot.message_handler(commands=['sosal'])
 def sosal(message):
-    user = random.choice(users_without_yana)
-    bot.send_message(message.chat.id, f"{user} сосал?")
+    handler.handle_sosal(message)
 
 @bot.message_handler(commands=['uebishche'])
 def uebishche(message):
-    user = random.choice(users_without_yana)
-    bot.send_message(message.chat.id, f"Уебище это: {user}")
+    handler.handle_uebishche(message)
 
 @bot.message_handler(commands=['db'])
 def db(message):
-    bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
-    bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
+    dbhandler.handle_get_users(message)
 
 @bot.message_handler(commands=['db_user_add'])
 def db_user_add(message):
