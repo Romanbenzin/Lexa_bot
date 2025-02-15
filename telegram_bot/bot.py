@@ -8,54 +8,27 @@ from deepseek.requests_to_deepseek import api_request
 from team_speak.team_speak_server import status_server
 from data_base.data_base_actions import get_all_uses_name, get_all_uses_name_without_yana, add_user, delete_user, \
     add_game, get_game
+from telegram_bot.bot_core.bot_core import Handler
 from telegram_bot.helpers import list_formatter
 
 bot = pass_bot.bot
+handler = Handler(bot)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup = types.ReplyKeyboardMarkup()
-    itembtn1 = types.KeyboardButton('/help')
-    markup.add(itembtn1)
-    bot.send_message(message.chat.id, "Привет, я бот ЛЕХА. Напиши /help, чтобы узнать мои команды.")#, reply_markup=markup)
+    handler.handle_start(message)
 
 @bot.message_handler(commands=['bot_help'])
 def bot_help(message):
-    markup = types.ReplyKeyboardMarkup()
-    dota = types.KeyboardButton('/dota')
-    cs = types.KeyboardButton('/cs')
-    markup.add(dota, cs)
-    bot.send_message(message.chat.id, "Мои команды:"
-                                      "\n1. /start  -   запускает бота"
-                                      "\n2. /dota   -   Опросник по доте (только для крутых)"
-                                      "\n3. /cs     -   Опросник по контре (только для крутых)"
-                                      "\n4. /lexa   -   Поздороваться с ЛЕХОЙ (ЗОМБИ)"
-                                      "\n5. /pivo   -   Рандомайзер, думаешь попить пивка или нет? - запускай"
-                                      "\n6. /sosal  -   Узнать у рандомного участника сосал ли он."
-                                      "\n7. /uebishche  -   Узнать кто уебище"
-                                      "\n8. /weather_izh - Узнать погоду в ижевске"
-                                      "\n9. /roll-n - Кинуть ролл. n - от 1 до n"
-                                      "\n10. /i - запрос в deepseek"
-                                      "\n11. /teamspeak_status - статус teamspeak сервера"
-                                      "\n12. /db - База данных"
-                     )#, reply_markup=markup)
-
+    handler.handle_help(message)
 
 @bot.message_handler(commands=['dota'])
 def dota(message):
-    bot.send_message(message.chat.id, list_formatter(pass_bot.users))
-    question = 'Опрос на крутую игру два. Посмотри во сколько создан опрос и выбери вариант ответа.'
-    options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в каэс два']
-    poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
-    print(poll)
+    handler.handle_voting_dota(message)
 
 @bot.message_handler(commands=['cs'])
 def cs(message):
-    bot.send_message(message.chat.id, list_formatter(pass_bot.users))
-    question = 'Опрос на крутую стрелялку два. Посмотри во сколько создан опрос и выбери вариант ответа.'
-    options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в дотан два']
-    poll = bot.send_poll(message.chat.id, question, options, is_anonymous=False)
-    print(poll)
+    handler.handle_voting_cs(message)
 
 @bot.message_handler(commands=['lexa'])
 def lexa(message):
