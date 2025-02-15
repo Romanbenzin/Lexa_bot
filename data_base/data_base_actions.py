@@ -1,5 +1,3 @@
-import re
-
 from datetime import datetime
 from psycopg2 import Error
 from data_base.data_base_connect import connect_to_db, close_connection
@@ -36,7 +34,7 @@ def get_all_uses_name_without_yana():
         finally:
             close_connection(connection)
 
-def add_user(user_name, sucker=True):
+def user_add(user_name, sucker=True):
     """Функция для добавления пользователя."""
     connection = connect_to_db()
     if connection:
@@ -57,7 +55,7 @@ def add_user(user_name, sucker=True):
         return "Ошибка подключения к базе данных."
 
 
-def delete_user(user_name):
+def user_delete(user_name):
     """Функция для удаления пользователя."""
     connection = connect_to_db()
     if connection:
@@ -79,7 +77,7 @@ def delete_user(user_name):
     else:
         return "Ошибка подключения к базе данных."
 
-def add_game(user_ids, url_game):
+def game_add(user_ids, url_game):
     """Функция для добавления игры."""
     connection = connect_to_db()
     if connection:
@@ -104,7 +102,7 @@ def add_game(user_ids, url_game):
     else:
         return "❌ Ошибка подключения к базе данных."
 
-def get_game(user_name):
+def game_get(user_name):
     """Функция для получения всех покупок пользователя."""
     connection = connect_to_db()
     if connection:

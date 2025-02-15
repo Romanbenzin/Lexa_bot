@@ -5,15 +5,15 @@ import re
 from telebot import types
 from deepseek.requests_to_deepseek import api_request
 from team_speak.team_speak_server import status_server
-from data_base.data_base_actions import get_all_uses_name, get_all_uses_name_without_yana, add_user, delete_user, \
-    add_game, get_game
+from data_base.data_base_actions import get_all_uses_name, get_all_uses_name_without_yana, game_add, game_get, \
+    user_delete
 from telegram_bot.bot_core.bot_core import Handler
 from telegram_bot.bot_database_core.bot_database_core import DbHandler
 from telegram_bot.helpers import list_formatter
 
 bot = pass_bot.bot
 handler = Handler(bot)
-dbhandler = DbHandler(bot)
+data_base_handler = DbHandler(bot)
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -47,52 +47,20 @@ def sosal(message):
 def uebishche(message):
     handler.handle_uebishche(message)
 
-@bot.message_handler(commands=['db'])
-def db(message):
-    dbhandler.handle_get_users(message)
+@bot.message_handler(commands=['db_user_get'])
+def db_user_get(message):
+    data_base_handler.handle_get_users(message)
 
 @bot.message_handler(commands=['db_user_add'])
 def db_user_add(message):
-    # Разбиваем сообщение на части
-    parts = message.text.split()
-    # Проверяем, что сообщение содержит достаточно аргументов
-    if len(parts) < 2:
-        bot.reply_to(message, "Используйте: /db_user_add <имя_пользователя> <sucker (опционально, по умолчанию True)>")
-        return
-    # Извлекаем имя пользователя
-    user_name = parts[1]
-    # Извлекаем значение sucker (если указано)
-    sucker = True  # Значение по умолчанию
-    if len(parts) >= 3:
-        sucker = parts[2].lower() == "true"  # Преобразуем строку в булево значение
-    # Добавляем пользователя в базу данных
-    result = add_user(user_name, sucker)
-    # Отправляем результат пользователю
-    bot.reply_to(message, result)
-
-    bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
-    bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
+    data_base_handler.handle_user_add(message)
 
 @bot.message_handler(commands=['db_user_delete'])
 def db_user_delete(message):
-    # Разбиваем сообщение на части
-    parts = message.text.split()
-    # Проверяем, что сообщение содержит достаточно аргументов
-    if len(parts) < 2:
-        bot.reply_to(message, "Используйте: /db_user_delete <имя_пользователя>")
-        return
-    # Извлекаем имя пользователя
-    user_name = parts[1]
-    # Удаляем пользователя из базы данных
-    result = delete_user(user_name)
-    # Отправляем результат пользователю
-    bot.reply_to(message, result)
-
-    bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
-    bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
+    data_base_handler.handle_user_delete(message)
 
 @bot.message_handler(commands=['db_game_add'])
-def db_game_add(message):
+def game_add(message):
     parts = message.text.split(maxsplit=2)  # Ожидаем три части: команда, user_ids, url_game
 
     # Проверяем, что сообщение содержит достаточно аргументов
@@ -121,7 +89,7 @@ def db_game_add(message):
     user_ids_clean = ",".join(user_ids_list)
 
     # Добавляем игру в базу данных
-    result = add_game(user_ids_clean, url_game)
+    result = game_add(user_ids_clean, url_game)
 
     bot.reply_to(message, result)
 
@@ -133,7 +101,7 @@ def db_get_game(message):
         return
 
     user_name = parts[1]
-    games = get_game(user_name)
+    games = game_get(user_name)
 
     if isinstance(games, list):
         if games:
