@@ -31,8 +31,8 @@ class DbHandler:
         # Отправляем результат пользователю
         self.bot.reply_to(message, result)
 
-        self.bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
-        self.bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
+        self.bot.send_message(message.chat.id, list_formatter(get_all_user_names()))
+        self.bot.send_message(message.chat.id, list_formatter(get_all_user_names_without_yana()))
 
     def handle_user_delete(self, message):
         # Разбиваем сообщение на части
@@ -48,8 +48,8 @@ class DbHandler:
         # Отправляем результат пользователю
         self.bot.reply_to(message, result)
 
-        self.bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
-        self.bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
+        self.bot.send_message(message.chat.id, list_formatter(get_all_user_names()))
+        self.bot.send_message(message.chat.id, list_formatter(get_all_user_names_without_yana()))
 
     def handle_game_add(self, message):
         parts = message.text.split(maxsplit=2)  # Ожидаем три части: команда, user_ids, url_game

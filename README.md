@@ -15,5 +15,5 @@
 - [pyTelegramBotAPI](docs/telegram_bot_api.md)
 - [DOCKER](docs/docker_commands.md)
 - [MANUAL](docs/manual_commands.md)
+- [db_command](docs/bot_db_command.md)
 - [.ENV](docs/example.env)
-- [db_command]()
