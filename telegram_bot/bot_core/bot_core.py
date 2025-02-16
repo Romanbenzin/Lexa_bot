@@ -1,15 +1,17 @@
 import random
 import requests
 
+from data_base.data_base_actions import get_all_user_names_without_yana
 from team_speak.team_speak_server import status_server
 from deepseek.requests_to_deepseek import api_request
 from telebot import types
-from telegram_bot.pass_bot import users, users_without_yana
-from telegram_bot.helpers import list_formatter
+from telegram_bot.bot_database_core.bot_database_core import DbHandler
+
 
 class Handler:
     def __init__(self, bot):
         self.bot = bot
+        self.data_base_handler = DbHandler(bot)
 
     def handle_start(self, message):
         markup = types.ReplyKeyboardMarkup()
@@ -41,13 +43,13 @@ class Handler:
                          )  # , reply_markup=markup)
 
     def handle_voting_dota(self, message):
-        self.bot.send_message(message.chat.id, list_formatter(users))
+        self.data_base_handler.handle_get_users(message)
         question = 'Опрос на крутую игру два. Посмотри во сколько создан опрос и выбери вариант ответа.'
         options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в каэс два']
         self.bot.send_poll(message.chat.id, question, options, is_anonymous=False)
 
     def handle_voting_cs(self, message):
-        self.bot.send_message(message.chat.id, list_formatter(users))
+        self.data_base_handler.handle_get_users(message)
         question = 'Опрос на крутую стрелялку два. Посмотри во сколько создан опрос и выбери вариант ответа.'
         options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в дотан два']
         self.bot.send_poll(message.chat.id, question, options, is_anonymous=False)
@@ -62,11 +64,13 @@ class Handler:
                                           f"то я скажу тебе: \n{random_answer}")
 
     def handle_sosal(self, message):
-        user = random.choice(users_without_yana)
+        users_list = get_all_user_names_without_yana()
+        user = random.choice(users_list)
         self.bot.send_message(message.chat.id, f"{user} сосал?")
 
     def handle_uebishche(self, message):
-        user = random.choice(users_without_yana)
+        users_list = get_all_user_names_without_yana()
+        user = random.choice(users_list)
         self.bot.send_message(message.chat.id, f"Уебище это: {user}")
 
     def handle_weather(self, message):

@@ -1,16 +1,16 @@
 import re
-
-from data_base.data_base_actions import (get_all_uses_name, get_all_uses_name_without_yana, user_add, user_delete,
-                                         game_add, game_get)
+from data_base.data_base_actions import (user_add, user_delete, game_add, game_get, get_all_user_names, get_all_user_names_without_yana)
 from telegram_bot.helpers import list_formatter
 
 class DbHandler:
     def __init__(self, bot):
         self.bot = bot
 
+    def handle_get_users_without_yana(self, message):
+        self.bot.send_message(message.chat.id, list_formatter(get_all_user_names_without_yana()))
+
     def handle_get_users(self, message):
-        self.bot.send_message(message.chat.id, list_formatter(get_all_uses_name()))
-        self.bot.send_message(message.chat.id, list_formatter(get_all_uses_name_without_yana()))
+        self.bot.send_message(message.chat.id, list_formatter(get_all_user_names()))
 
     def handle_user_add(self, message):
         # Разбиваем сообщение на части
