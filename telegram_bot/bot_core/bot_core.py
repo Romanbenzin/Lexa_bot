@@ -8,7 +8,7 @@ from telebot import types
 from telegram_bot.bot_database_core.bot_database_core import DbHandler
 from telegram_bot.static_data.urls import izhevsk_url
 from telegram_bot.static_data.vote import bot_command_help, dota_question, dota_options, cs_options, cs_question, \
-    pivo_list
+    pivo_list, bot_command_start, bot_command_leha
 
 
 class Handler:
@@ -22,7 +22,7 @@ class Handler:
         markup.add(itembtn1)
         self.bot.send_message(
             message.chat.id,
-            "Привет, я бот ЛЕХА. Напиши /help, чтобы узнать мои команды."
+            bot_command_start
         )
 
     def handle_help(self, message):
@@ -30,7 +30,10 @@ class Handler:
         dota = types.KeyboardButton('/dota')
         cs = types.KeyboardButton('/cs')
         markup.add(dota, cs)
-        self.bot.send_message(message.chat.id, bot_command_help)  # , reply_markup=markup)
+        self.bot.send_message(
+            message.chat.id,
+            bot_command_help
+        )  # , reply_markup=markup)
 
     def handle_voting_dota(self, message):
         self.data_base_handler.handle_get_users(message)
@@ -41,7 +44,7 @@ class Handler:
         self.bot.send_poll(message.chat.id, cs_question, cs_options, is_anonymous=False)
 
     def handle_leha(self, message):
-        self.bot.send_message(message.chat.id, "Привет, вы вызвали ЛЕХУ-ЗОМБИ")
+        self.bot.send_message(message.chat.id, bot_command_leha)
 
     def handle_pivo(self, message):
         random_answer = random.choice(pivo_list)
