@@ -1,0 +1,1 @@
+izhevsk_url = "https://api.open-meteo.com/v1/forecast?latitude=56.8498&longitude=53.2045&hourly=temperature_2m&forecast_days=1"

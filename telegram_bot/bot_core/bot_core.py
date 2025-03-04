@@ -6,6 +6,9 @@ from team_speak.team_speak_server import status_server
 from deepseek.requests_to_deepseek import api_request
 from telebot import types
 from telegram_bot.bot_database_core.bot_database_core import DbHandler
+from telegram_bot.static_data.urls import izhevsk_url
+from telegram_bot.static_data.vote import bot_command_help, dota_question, dota_options, cs_options, cs_question, \
+    pivo_list
 
 
 class Handler:
@@ -27,39 +30,21 @@ class Handler:
         dota = types.KeyboardButton('/dota')
         cs = types.KeyboardButton('/cs')
         markup.add(dota, cs)
-        self.bot.send_message(message.chat.id, "Мои команды:"
-                                          "\n1. /start  -   запускает бота"
-                                          "\n2. /dota   -   Опросник по доте (только для крутых)"
-                                          "\n3. /cs     -   Опросник по контре (только для крутых)"
-                                          "\n4. /lexa   -   Поздороваться с ЛЕХОЙ (ЗОМБИ)"
-                                          "\n5. /pivo   -   Рандомайзер, думаешь попить пивка или нет? - запускай"
-                                          "\n6. /sosal  -   Узнать у рандомного участника сосал ли он."
-                                          "\n7. /uebishche  -   Узнать кто уебище"
-                                          "\n8. /weather_izh - Узнать погоду в ижевске"
-                                          "\n9. /roll-n - Кинуть ролл. n - от 1 до n"
-                                          "\n10. /i - запрос в deepseek"
-                                          "\n11. /teamspeak_status - статус teamspeak сервера"
-                                          "\n12. /db - База данных"
-                         )  # , reply_markup=markup)
+        self.bot.send_message(message.chat.id, bot_command_help)  # , reply_markup=markup)
 
     def handle_voting_dota(self, message):
         self.data_base_handler.handle_get_users(message)
-        question = 'Опрос на крутую игру два. Посмотри во сколько создан опрос и выбери вариант ответа.'
-        options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в каэс два']
-        self.bot.send_poll(message.chat.id, question, options, is_anonymous=False)
+        self.bot.send_poll(message.chat.id, dota_question, dota_options, is_anonymous=False)
 
     def handle_voting_cs(self, message):
         self.data_base_handler.handle_get_users(message)
-        question = 'Опрос на крутую стрелялку два. Посмотри во сколько создан опрос и выбери вариант ответа.'
-        options = ['да', '10 мин', '20 мин', '30 мин', '60 мин', '83 дня', 'я б лучше в дотан два']
-        self.bot.send_poll(message.chat.id, question, options, is_anonymous=False)
+        self.bot.send_poll(message.chat.id, cs_question, cs_options, is_anonymous=False)
 
     def handle_leha(self, message):
         self.bot.send_message(message.chat.id, "Привет, вы вызвали ЛЕХУ-ЗОМБИ")
 
     def handle_pivo(self, message):
-        choise_list = ['Да, сделай это!', 'Нет, не делай этого, не надо дядя']
-        random_answer = random.choice(choise_list)
+        random_answer = random.choice(pivo_list)
         self.bot.send_message(message.chat.id, f"Если ты думал попить пивка, сходить покакать или поиграть в компик, "
                                           f"то я скажу тебе: \n{random_answer}")
 
@@ -74,8 +59,7 @@ class Handler:
         self.bot.send_message(message.chat.id, f"Уебище это: {user}")
 
     def handle_weather(self, message):
-        response = requests.get(
-            'https://api.open-meteo.com/v1/forecast?latitude=56.8498&longitude=53.2045&hourly=temperature_2m&forecast_days=1')
+        response = requests.get(izhevsk_url)
         list_of_temperature = response.json()['hourly']['temperature_2m']
         self.bot.send_message(message.chat.id, f"Минимальная температура сегодня в Ижевске : {min(list_of_temperature)}")
         self.bot.send_message(message.chat.id, f"Максимальная температура сегодня в Ижевске : {max(list_of_temperature)}")
