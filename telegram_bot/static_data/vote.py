@@ -25,3 +25,6 @@ pivo_list = ['Да, сделай это!', 'Нет, не делай этого, 
 
 def who_is_bad_gay(user):
     return f"Уебище это: {user}"
+
+def who_is_sucker(user):
+    return f"{user} сосал?"

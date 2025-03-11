@@ -8,7 +8,7 @@ from telebot import types
 from telegram_bot.bot_database_core.bot_database_core import DbHandler
 from telegram_bot.static_data.urls import izhevsk_url
 from telegram_bot.static_data.vote import bot_command_help, dota_question, dota_options, cs_options, cs_question, \
-    pivo_list, bot_command_start, bot_command_leha, who_is_bad_gay
+    pivo_list, bot_command_start, bot_command_leha, who_is_bad_gay, who_is_sucker
 
 
 class Handler:
@@ -54,7 +54,7 @@ class Handler:
     def handle_sosal(self, message):
         users_list = get_all_user_names_without_yana()
         user = random.choice(users_list)
-        self.bot.send_message(message.chat.id, f"{user} сосал?")
+        self.bot.send_message(message.chat.id, who_is_sucker(user))
 
     def handle_uebishche(self, message):
         users_list = get_all_user_names_without_yana()
