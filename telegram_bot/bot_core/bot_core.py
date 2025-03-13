@@ -3,7 +3,7 @@ import requests
 
 from data_base.data_base_actions import get_all_user_names_without_yana
 from team_speak.team_speak_server import status_server
-from deepseek.requests_to_deepseek import api_request
+from deepseek.requests_to_deepseek import short_api_request
 from telebot import types
 from telegram_bot.bot_database_core.bot_database_core import DbHandler
 from telegram_bot.static_data.urls import izhevsk_url
@@ -84,7 +84,7 @@ class Handler:
                 return
 
             # Формируем запрос к DeepSeek
-            response = api_request(user_request)
+            response = short_api_request(user_request)
 
             # Обработка ответа
             if response.status_code == 200:
