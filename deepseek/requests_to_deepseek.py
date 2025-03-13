@@ -3,7 +3,7 @@ import requests
 from dotenv import load_dotenv
 
 load_dotenv()
-API_KEY_DEEPSEEK = os.getenv("API_KEY_TEAMSPEAK")
+API_KEY_DEEPSEEK = os.getenv("API_KEY_DEEPSEEK")
 
 URL_DEEPSEEK = "https://api.deepseek.com/v1/chat/completions"
 
