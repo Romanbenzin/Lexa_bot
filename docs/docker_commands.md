@@ -68,3 +68,8 @@
 # Подключиться к python консоли
     docker exec -it bot python
     print(os.getenv("DATABASE_URL"))
+
+
+# Создать том для бд
+    docker volume create postgres_data    
+    cat backup.sql | docker exec -i temp_postgres psql -U ${POSTGRES_USER} -d ${POSTGRES_DB}

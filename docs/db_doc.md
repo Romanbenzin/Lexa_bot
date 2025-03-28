@@ -62,3 +62,10 @@
 
 # Тут хранятся сырые данные по базе
     cd var/lib/postgresql/data/
+
+# Снять дамп из контенера
+    sudo docker exec -t db pg_dump -U ${POSTGRES_USER} -d ${POSTGRES_DB} > backup.sql
+    sudo docker exec -t db pg_dump -U postgres -d my_bot_db > backup.sql
+
+# Скачать дамп с сервера
+    scp benzin@156.67.63.180:/home/benzin/Lexa_bot/backup.sql C:/lexa_bot/Lexa_bot

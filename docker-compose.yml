@@ -9,7 +9,9 @@ services:  # Секции с сервисами (контейнерами)
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Переменная окружения для пароля базы данных
       POSTGRES_DB: ${POSTGRES_DB}  # Переменная окружения для имени базы данных
     volumes:  # Монтирование директорий из хоста в контейнер
-      - ./data:/var/lib/postgresql/data  # Монтирование данных базы данных (постоянное хранилище)
+      # - ./data:/var/lib/postgresql/data  # Монтирование данных базы данных (постоянное хранилище)
+      - postgres_data:/var/lib/postgresql/data
+      - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
       # - ./lexa_dump.sql:/docker-entrypoint-initdb.d/lexa_dump.sql  # Монтирование SQL дампа для инициализации базы данных
       # - ./postgres_data:/var/lib/postgresql/data
     ports:

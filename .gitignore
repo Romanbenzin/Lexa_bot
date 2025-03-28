@@ -9,3 +9,4 @@ data/
 lexa_dump.sql
 postgres_data/
 Dockerfile.db
+backup.sql
