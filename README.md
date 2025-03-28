@@ -7,13 +7,9 @@
 
 ### Дамп. Нужно создать том
     docker volume create postgres_data
-    cat backup.sql | docker exec -i temp_postgres psql -U ${POSTGRES_USER} -d ${POSTGRES_DB}
 
 ### Проверить, что используются данные из дампа
-docker exec -it db psql -U postgres -d my_bot_db -c "SELECT COUNT(*) FROM purchases;"
-
-(!) если так, то значит локальные данные используются
-psql -U postgres -d my_bot_db  
+    docker exec -it db psql -U postgres -d my_bot_db -c "SELECT COUNT(*) FROM purchases;"
 
 ### Запуск
     Создать в корневой директории файл .env по аналогии с docs/example.env
