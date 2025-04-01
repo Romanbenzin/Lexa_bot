@@ -24,7 +24,7 @@ jobs:
               sleep 5
             fi
             
-            source /home/benzin/Lexa_bot/.env && \
+            source ${{ secrets.ENV_PATH }}/.env && \
             mkdir -p \"${{ secrets.DEPLOY_PATH }}/database_old\" && \
             docker exec ${{ secrets.DB_CONTAINER_NAME }} pg_dump -U ${{ secrets.DB_USER }} ${{ secrets.DB_NAME }} > \"${{ secrets.DEPLOY_PATH }}/database_old/backup_$(date +%Y-%m-%d_%H-%M-%S).sql\" && \
             find ${{ secrets.DEPLOY_PATH }}/database_old -name '*.sql' -type f -mtime +30 -delete
