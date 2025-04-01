@@ -1,6 +1,6 @@
 # Сейчас работает бот так, что в контейнере bot находится сам бот, а в контейнере db лежит psql
 
-### После pull, нужно выполнить 2 команды
+### После pull, нужно выполнить 2 команды.
     git pull origin main    
     sudo docker-compose down -v
     sudo docker-compose up --build -d
