@@ -1,0 +1,33 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          known_hosts: "just-a-placeholder"
+
+      - name: Deploy via Docker Compose
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
+            cd ${{ secrets.DEPLOY_PATH }} &&
+            echo 'Stopping old containers...' &&
+            sudo docker-compose down -v &&
+            echo 'Removing unused containers, networks, images...' &&
+            sudo docker system prune -f &&
+            echo 'Pulling changes from Git...' &&
+            git pull origin main &&
+            echo 'Building and starting new containers...' &&
+            sudo docker-compose up --build -d
+          "
