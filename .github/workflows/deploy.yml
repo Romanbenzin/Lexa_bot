@@ -17,6 +17,13 @@ jobs:
       - name: Execute backup script
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
+            # Проверка что контейнер запущен
+            if ! docker ps | grep -q ${{ secrets.DB_CONTAINER_NAME }}; then
+              echo 'Starting DB container...'
+              docker start ${{ secrets.DB_CONTAINER_NAME }}
+              sleep 5
+            fi
+            
             source /home/benzin/Lexa_bot/.env && \
             mkdir -p \"${{ secrets.DEPLOY_PATH }}/database_old\" && \
             docker exec ${{ secrets.DB_CONTAINER_NAME }} pg_dump -U ${{ secrets.DB_USER }} ${{ secrets.DB_NAME }} > \"${{ secrets.DEPLOY_PATH }}/database_old/backup_$(date +%Y-%m-%d_%H-%M-%S).sql\" && \
