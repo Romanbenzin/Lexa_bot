@@ -1,4 +1,4 @@
-name: Deploy to Server
+name: Deploy Lexa-bot to Server
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
             cd ${{ secrets.DEPLOY_PATH }} &&
             git config --global --add safe.directory ${{ secrets.DEPLOY_PATH }} &&
-            docker-compose down -v &&
+            docker-compose down && # Без -v, чтобы сохранить тома
             docker system prune -f &&
             git fetch origin &&
             git reset --hard origin/main &&
