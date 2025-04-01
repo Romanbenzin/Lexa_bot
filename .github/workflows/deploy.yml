@@ -31,6 +31,7 @@ jobs:
           "
 
   deploy:
+    name: Deploy krytogo bota
     runs-on: ubuntu-latest
 
     steps:
