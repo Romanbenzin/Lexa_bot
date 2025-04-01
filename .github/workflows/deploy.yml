@@ -17,7 +17,7 @@ jobs:
       - name: Execute backup script
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
-            source ~/.env && \
+            source /home/benzin/Lexa_bot/.env && \
             mkdir -p $DEPLOY_PATH/database_old && \
             docker exec $POSTGRES_HOST_CONTAINER pg_dump -U $POSTGRES_USER $POSTGRES_DB > $DEPLOY_PATH/database_old/backup_$(date +%Y-%m-%d_%H-%M-%S).sql && \
             find $DEPLOY_PATH/database_old -name '*.sql' -type f -mtime +30 -delete
