@@ -21,12 +21,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
             cd ${{ secrets.DEPLOY_PATH }} &&
-            echo 'Stopping old containers...' &&
-            sudo docker-compose down -v &&
-            echo 'Removing unused containers, networks, images...' &&
-            sudo docker system prune -f &&
-            echo 'Pulling changes from Git...' &&
+            git config --global --add safe.directory ${{ secrets.DEPLOY_PATH }} &&
+            docker-compose down -v &&
+            docker system prune -f &&
             git pull origin main &&
-            echo 'Building and starting new containers...' &&
-            sudo docker-compose up --build -d
+            docker-compose up --build -d
           "
