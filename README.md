@@ -1,6 +1,6 @@
 ### Настроен ci/cd. Так же делается backup базы данных при деплое в папку database_old
 
-### После pull, нужно выполнить 2 команды.
+### После pull, нужно выполнить 2 команды
     git pull origin main    
     sudo docker-compose down -v
     sudo docker-compose up --build -d
