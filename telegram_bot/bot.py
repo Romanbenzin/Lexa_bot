@@ -63,6 +63,10 @@ def db_game_get(message):
 #def db_game_delete(message):
 #    data_base_handler.handle_game_delete(message)
 
+@bot.message_handler(commands=['animal'])
+def animal(message):
+    handler.animal(message)
+
 @bot.message_handler(commands=['weather_izh'])
 def weather_izh(message):
     handler.handle_weather(message)
@@ -99,7 +103,8 @@ bot.set_my_commands([
     types.BotCommand("weather_izh",   "Узнать погоду в ижевске"),
     types.BotCommand("roll",   "Кинуть ролл"),
     types.BotCommand("i",   "Запрос к deepseek"),
-    types.BotCommand("teamspeak_status",   "Узнать статус сервера ts")
+    types.BotCommand("teamspeak_status",   "Узнать статус сервера ts"),
+    types.BotCommand("animal",   "Узнать о случайном животном")
 ])
 
-bot.polling()
+bot.polling(none_stop=True)

@@ -6,6 +6,7 @@ from team_speak.team_speak_server import status_server
 from deepseek.requests_to_deepseek import short_api_request
 from telebot import types
 from telegram_bot.bot_database_core.bot_database_core import DbHandler
+from telegram_bot.helpers import find_random_video
 from telegram_bot.static_data.urls import izhevsk_url
 from telegram_bot.static_data.vote import bot_command_help, dota_question, dota_options, cs_options, cs_question, \
     pivo_list, bot_command_start, bot_command_leha, who_is_bad_gay, who_is_sucker
@@ -66,6 +67,14 @@ class Handler:
         list_of_temperature = response.json()['hourly']['temperature_2m']
         self.bot.send_message(message.chat.id, f"Минимальная температура сегодня в Ижевске : {min(list_of_temperature)}")
         self.bot.send_message(message.chat.id, f"Максимальная температура сегодня в Ижевске : {max(list_of_temperature)}")
+
+    def animal(self, message):
+        video_path = find_random_video()
+        if video_path:
+            with open(video_path, 'rb') as video:
+                self.bot.send_video(message.chat.id, video)
+        else:
+            self.bot.send_message(message.chat.id, "В папке нет видеофайлов.")
 
     def handle_ii(self, message):
         try:
