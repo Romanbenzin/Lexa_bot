@@ -24,6 +24,6 @@ def find_random_video():
 
         return os.path.join(VIDEO_FOLDER, random.choice(videos))
 
-    except Exception as e:
-        print(f"Ошибка: {e}")
+    except Exception as error:
+        print(f"Ошибка: {error}")
         return None
