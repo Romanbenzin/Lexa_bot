@@ -1,7 +1,6 @@
 import psycopg2
 import os
 from psycopg2 import Error
-from telegram_bot.config_bot import DB_CONFIG
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
