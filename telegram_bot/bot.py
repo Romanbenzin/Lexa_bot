@@ -1,9 +1,9 @@
-import pass_bot
+import config_bot
 from telebot import types
 from telegram_bot.bot_core.bot_core import Handler
 from telegram_bot.bot_database_core.bot_database_core import DbHandler
 
-bot = pass_bot.bot
+bot = config_bot.bot
 handler = Handler(bot)
 data_base_handler = DbHandler(bot)
 
