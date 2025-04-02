@@ -4,7 +4,8 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 # ключ от тг бота
-TG_KEY = os.getenv("TG_BOT_TEST")
+TG_KEY_PROD = os.getenv("TG_BOT_PROD")
+TG_KEY_STAGE = os.getenv("TG_BOT_TEST")
 # пароль от бд
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
@@ -12,7 +13,7 @@ POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_HOST_CONTAINER = os.getenv("POSTGRES_HOST_CONTAINER")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 
-bot = telebot.TeleBot(TG_KEY)
+bot = telebot.TeleBot(TG_KEY_PROD)
 
 DB_CONFIG = {
     "dbname": POSTGRES_DB,  # Имя базы данных
