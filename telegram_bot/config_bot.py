@@ -3,9 +3,6 @@ import os
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
-# ключ от тг бота
-TG_KEY_PROD = os.getenv("TG_BOT_PROD")
-TG_KEY_STAGE = os.getenv("TG_BOT_TEST")
 # пароль от бд
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
@@ -13,6 +10,10 @@ POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_HOST_CONTAINER = os.getenv("POSTGRES_HOST_CONTAINER")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 
+# ключ от тг бота
+TG_KEY_PROD = os.getenv("TG_BOT_PROD")
+TG_KEY_STAGE = os.getenv("TG_BOT_TEST")
+# Выбрать значение в зависимости от нужной среды
 bot = telebot.TeleBot(TG_KEY_PROD)
 
 DB_CONFIG = {
