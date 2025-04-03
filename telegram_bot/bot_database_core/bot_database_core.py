@@ -84,7 +84,7 @@ class DbHandler:
 
         self.bot.reply_to(message, result)
 
-    def handle_game_get(self, message):
+    def handle_get_game(self, message):
         parts = message.text.split(maxsplit=1)
         if len(parts) < 2:
             self.bot.reply_to(message, "Используйте: /db_get_game <имя_пользователя>")

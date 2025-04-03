@@ -55,9 +55,9 @@ def db_user_delete(message):
 def game_add(message):
     data_base_handler.handle_game_add(message)
 
-@bot.message_handler(commands=['db_game_get'])
-def db_game_get(message):
-    data_base_handler.handle_game_get(message)
+@bot.message_handler(commands=['db_get_game'])
+def db_get_game(message):
+    data_base_handler.handle_get_game(message)
 
 #@bot.message_handler(commands=['db_game_delete'])
 #def db_game_delete(message):
