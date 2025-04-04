@@ -11,7 +11,7 @@ data_base_handler = DbHandler(bot)
 def start(message):
     handler.handle_start(message)
 
-@bot.message_handler(commands=['bot_help'])
+@bot.message_handler(commands=['help'])
 def bot_help(message):
     handler.handle_help(message)
 
