@@ -10,7 +10,8 @@ bot_command_help = ("Мои команды:"
                     "\n9. /roll-n - Кинуть ролл. n - от 1 до n"
                     "\n10. /i - запрос в deepseek"
                     "\n11. /teamspeak_status - статус teamspeak сервера"
-                    "\n12. /db - База данных")
+                    "\n12. /db - База данных"
+                    "\n13. /animal - Узнать о животном")
 
 bot_command_start = "Привет, я бот ЛЕХА. Напиши /help, чтобы узнать мои команды."
 bot_command_leha = "Привет, вы вызвали ЛЕХУ-ЗОМБИ"
