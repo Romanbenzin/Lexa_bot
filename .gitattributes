@@ -1,2 +1,13 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Все .go-файлы должны использовать LF
+*.go text eol=lf
+
+# go.mod и go.sum тоже должны быть в LF
+go.mod text eol=lf
+go.sum text eol=lf
+
+# Другие текстовые файлы (например, .md, .yaml) — тоже LF
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf

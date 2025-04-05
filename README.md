@@ -11,6 +11,9 @@
 ### Проверить, что используются данные из дампа
     docker exec -it db psql -U postgres -d my_bot_db -c "SELECT COUNT(*) FROM purchases;"
 
+# Посмотреть логи:
+    docker-compose logs -f api
+
 ### Запуск
     Создать в корневой директории файл .env по аналогии с docs/example.env
 

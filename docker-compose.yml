@@ -14,7 +14,7 @@ services:  # Секции с сервисами (контейнерами)
       - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
       # - ./lexa_dump.sql:/docker-entrypoint-initdb.d/lexa_dump.sql  # Монтирование SQL дампа для инициализации базы данных
       # - ./postgres_data:/var/lib/postgresql/data
-    ports:
+    ports: # Можно убрать, если используетсят только внутри докера
       - "5432:5432"  # Проброс порта базы данных, чтобы можно было подключиться с хоста
     healthcheck:  # Проверка здоровья контейнера
       test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]  # Проверка доступности базы данных
@@ -38,6 +38,24 @@ services:  # Секции с сервисами (контейнерами)
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}  # Строка подключения к базе данных
     networks:
       - lexa_network  # Сеть для бота
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+    networks:
+      - lexa_network  # Сеть для бота
+
 volumes:
   postgres_data:
 
