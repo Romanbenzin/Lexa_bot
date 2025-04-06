@@ -18,6 +18,9 @@ def get_all_user_names():
             return []
         finally:
             close_connection(connection)
+    else:
+        print("Не удалось установить соединение с базой данных.")
+        return []
 
 def get_all_user_names_without_yana():
     """Функция для получения списка пользователей."""
