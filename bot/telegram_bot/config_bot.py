@@ -14,7 +14,7 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 TG_KEY_PROD = os.getenv("TG_BOT_PROD")
 TG_KEY_STAGE = os.getenv("TG_BOT_TEST")
 # Выбрать значение в зависимости от нужной среды
-bot = telebot.TeleBot(TG_KEY_STAGE)
+bot = telebot.TeleBot(TG_KEY_PROD)
 
 DB_CONFIG = {
     "dbname": POSTGRES_DB,  # Имя базы данных
