@@ -93,7 +93,7 @@ def handle_message(message):
 
 bot.set_my_commands([
     types.BotCommand("start",   "Запустить бота"),
-    types.BotCommand("bot_help",    "Показать список команд"),
+    types.BotCommand("help",    "Показать список команд"),
     types.BotCommand("dota",    "Опросник по доте"),
     types.BotCommand("cs",      "Опросник по контер стрике"),
     types.BotCommand("lexa",    "Поздороваться с ЛЕХА ЗОМБИ"),
