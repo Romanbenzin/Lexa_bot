@@ -70,3 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 });
+
+const soundClick = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3');
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        soundClick.currentTime = 0;
+        soundClick.play();
+    });
+});

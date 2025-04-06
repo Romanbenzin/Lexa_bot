@@ -6,11 +6,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <h1>Lexa_bot</h1>
-        <button @click="getPurchaseCount">Получить количество покупок</button>
-        <button @click="ping">Проверить работу API (ping)</button>
+    <div id="app" v-cloak>
+        <!-- Верхний разделитель -->
+        <div class="darksouls-separator"></div>
 
+        <h1>Lexa_bot</h1>
+
+        <!-- Разделитель после заголовка -->
+        <div class="darksouls-separator"></div>
+
+        <!-- Кнопки с эффектом костра -->
+        <button @click="getPurchaseCount" class="darksouls-flame">Получить количество покупок</button>
+        <button @click="ping" class="darksouls-flame">Проверить работу API (ping)</button>
+
+        <!-- Разделитель перед результатом -->
+        <div class="darksouls-separator"></div>
+
+        <!-- Блок результата -->
         <div id="result">
             <p v-if="loading">Загрузка...</p>
             <p v-else-if="error" style="color: red">{{ error }}</p>
