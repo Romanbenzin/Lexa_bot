@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lexa_bot frontend</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Lexa_bot</h1>
+
+        <button @click="getPurchaseCount">Получить количество покупок</button>
+        <button @click="ping">Проверить работу API (ping)</button>
+
+        <div id="result">
+            <p v-if="loading">Загрузка...</p>
+            <p v-else-if="error" style="color: red">{{ error }}</p>
+            <div v-else>
+                <p v-if="purchaseCount">Количество покупок: <strong>{{ purchaseCount }}</strong></p>
+                <p v-if="pingMessage">Ответ сервера: <strong>{{ pingMessage }}</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const purchaseCount = ref(null);
+                const pingMessage = ref(null);
+                const loading = ref(false);
+                const error = ref(null);
+
+                async function getPurchaseCount() {
+                    try {
+                        loading.value = true;
+                        error.value = null;
+                        const response = await fetch('/api/count_purchases');
+                        const data = await response.json();
+                        purchaseCount.value = data.purchase_count;
+                        pingMessage.value = null;
+                    } catch (err) {
+                        error.value = err.message;
+                    } finally {
+                        loading.value = false;
+                    }
+                }
+
+                async function ping() {
+                    try {
+                        loading.value = true;
+                        error.value = null;
+                        const response = await fetch('/api/ping');
+                        const data = await response.json();
+                        pingMessage.value = data.message;
+                        purchaseCount.value = null;
+                    } catch (err) {
+                        error.value = err.message;
+                    } finally {
+                        loading.value = false;
+                    }
+                }
+
+                return {
+                    purchaseCount,
+                    pingMessage,
+                    loading,
+                    error,
+                    getPurchaseCount,
+                    ping
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

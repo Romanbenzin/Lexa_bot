@@ -56,6 +56,15 @@ services:  # Секции с сервисами (контейнерами)
     networks:
       - lexa_network  # Сеть для бота
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"  # Открываем 80 порт для доступа в браузере
+    depends_on:
+      - api  # Зависит от бэкенда (чтобы сначала запустился API)
+    networks:
+      - lexa_network  # Сеть для бота
+
 volumes:
   postgres_data:
 
