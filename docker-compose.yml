@@ -24,11 +24,16 @@ services:  # Секции с сервисами (контейнерами)
     networks:
       - lexa_network  # Сеть, в которой будут находиться контейнеры
 
-  bot:  # Сервис для бота (контейнер с ботом)
+  bot:  # Сервис для бота (контейнер с ботом).
     build:
       context: .
       dockerfile: bot/Dockerfile
     container_name: bot
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import psycopg2; psycopg2.connect('dbname=${POSTGRES_DB} user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} host=db')" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: always  # Перезапуск контейнера всегда
     depends_on:
       db:

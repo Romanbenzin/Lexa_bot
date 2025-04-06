@@ -1,14 +1,14 @@
 import random
 import os
 
+
 def list_formatter(non_formatted_list):
-    """Функция для форматирования списка с добавлением смайликов."""
     smiles = ['🙈', '🙉', '🙊']
 
-    # Добавляем смайлики между элементами списка
-    formatted_list = f" {random.choice(smiles)} ".join(non_formatted_list)
+    if not non_formatted_list or not isinstance(non_formatted_list, (list, tuple)):
+        return "Список пользователей пуст или недоступен"
 
-    return formatted_list
+    return f" {random.choice(smiles)} ".join(map(str, non_formatted_list))
 
 def find_random_video():
     VIDEO_FOLDER = os.path.join(os.getcwd(), "bot/video_data")
