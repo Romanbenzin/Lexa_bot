@@ -18,11 +18,11 @@
     Создать в корневой директории файл .env по аналогии с docs/example.env
 
 ### Пользование инструментами
-- [systemctl](docs/systemctl.md)
-- [GIT](docs/git_doc.md)
-- [POSTGRESQL](docs/db_doc.md)
-- [pyTelegramBotAPI](docs/telegram_bot_api.md)
-- [DOCKER](docs/docker_commands.md)
-- [MANUAL](docs/manual_commands.md)
-- [db_command](docs/bot_db_command.md)
-- [.ENV](docs/example.env)
+- [systemctl](bot/docs/systemctl.md)
+- [GIT](bot/docs/git_doc.md)
+- [POSTGRESQL](bot/docs/db_doc.md)
+- [pyTelegramBotAPI](bot/docs/telegram_bot_api.md)
+- [DOCKER](bot/docs/docker_commands.md)
+- [MANUAL](bot/docs/manual_commands.md)
+- [db_command](bot/docs/bot_db_command.md)
+- [.ENV](bot/docs/example.env)
