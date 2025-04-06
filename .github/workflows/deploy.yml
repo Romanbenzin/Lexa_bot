@@ -52,5 +52,5 @@ jobs:
             docker system prune -f &&
             git fetch origin &&
             git reset --hard origin/main &&
-            docker-compose up --build -d
+            docker-compose up --build -d | tee build.log
           "

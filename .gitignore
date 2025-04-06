@@ -4,8 +4,8 @@ test.py
 .idea
 __pycache__/
 *.py[cod]
-data/
-lexa_dump.sql
-postgres_data/
+bot/data/
+bot/lexa_dump.sql
+bot/postgres_data/
 Dockerfile.db
 backup.sql
