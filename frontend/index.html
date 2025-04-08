@@ -7,43 +7,11 @@
 </head>
 <body>
     <div id="app" v-cloak>
-        <!-- Верхний разделитель -->
-        <div class="darksouls-separator"></div>
-
-        <h1>Lexa_bot</h1>
-
-        <!-- Разделитель после заголовка -->
-        <div class="darksouls-separator"></div>
-
-        <!-- Кнопки с эффектом костра -->
-        <button @click="getPurchaseCount" class="darksouls-flame">Получить количество покупок</button>
-        <button @click="ping" class="darksouls-flame">Проверить работу API (ping)</button>
-
-        <!-- Разделитель перед результатом -->
-        <div class="darksouls-separator"></div>
-
-        <!-- Блок результата -->
-        <div id="result">
-            <p v-if="loading">Загрузка...</p>
-            <p v-else-if="error" style="color: red">{{ error }}</p>
-            <div v-else>
-                <p v-if="purchaseCount !== null">Количество покупок: <strong>{{ purchaseCount }}</strong></p>
-                <p v-if="pingMessage !== null">Ответ сервера: <strong>{{ pingMessage }}</strong></p>
-            </div>
-        </div>
+        <!-- Контент будет генерироваться Vue -->
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
     <script src="app.js"></script>
-
-    <!-- Для отладки -->
-    <script>
-        setTimeout(() => {
-            if (!window.Vue) {
-                document.getElementById('app').innerHTML =
-                    '<div style="color:red">Ошибка: Vue.js не загрузился</div>';
-            }
-        }, 500);
-    </script>
 </body>
 </html>
