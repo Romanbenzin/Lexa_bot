@@ -14,7 +14,21 @@ const GetGamePage = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`/api/get_game?user_name=${encodeURIComponent(userName)}`);
+            const response = await fetch(`/api/get_game?user_name=${encodeURIComponent(userName)}`, {
+                method: 'GET', // Явно указываем метод GET
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
+                },
+                credentials: 'include' // Если нужны куки
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const data = await response.json();
             if (Array.isArray(data)) {
                 setGames(data);

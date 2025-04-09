@@ -1,31 +1,25 @@
-# Билд-стадия
+# Первая стадия: сборка приложения
 FROM node:18 AS build
-
 WORKDIR /app
-
-# Копируем только package.json и lock-файл
 COPY package*.json ./
-
-# Если используешь yarn — сначала установи его (и lock-файл переименуй)
-# RUN corepack enable && corepack prepare yarn@stable --activate
-# COPY yarn.lock ./
-# RUN yarn install
-
-# Downgrade ajv и ajv-keywords вручную для совместимости
-RUN npm install ajv@6 ajv-keywords@3
-# Если npm:
 RUN npm install
-
 COPY . .
-
 RUN npm run build
 
-# Прод-стадия — NGINX
+# Вторая стадия: создание образа для Nginx
 FROM nginx:alpine
 
+# Удаляем все дефолтные конфиги и скрипты инициализации
+RUN rm -rf /etc/nginx/conf.d/* && \
+    rm -rf /docker-entrypoint.d/*
+
+# Создаем свою директорию для pid-файла
+RUN mkdir -p /var/run/nginx && \
+    chmod -R 777 /var/run/nginx
+
+# Копируем билд и конфиги
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
-
+# Запускаем nginx напрямую, минуя entrypoint скрипты
 CMD ["nginx", "-g", "daemon off;"]
