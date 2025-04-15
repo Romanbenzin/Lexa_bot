@@ -1,4 +1,5 @@
 ### Настроен ci/cd. Так же делается backup базы данных при деплое в папку database_old
+### Домен взят с https://my.noip.com/#
 
 ### После pull, нужно выполнить 2 команды
     git pull origin main    
@@ -16,6 +17,7 @@
 
 ### Запуск
     Создать в корневой директории файл .env по аналогии с docs/example.env
+    Создать в корневой директории файл backup.sql
 
 ### Пользование инструментами
 - [systemctl](bot/docs/systemctl.md)
