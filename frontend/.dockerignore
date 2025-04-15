@@ -1,0 +1,17 @@
+node_modules
+build
+.dockerignore
+Dockerfile
+.docker-compose.yml
+.git
+.gitignore
+*.log
+*.env
+.idea
+__pycache__/
+*.py[cod]
+bot/data/
+bot/lexa_dump.sql
+bot/postgres_data/
+Dockerfile.db
+backup.sql
