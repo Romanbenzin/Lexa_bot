@@ -1,4 +1,3 @@
-version: "3.8"  # Указывает версию Docker Compose файла
 services:  # Секции с сервисами (контейнерами)
   db:  # Сервис для базы данных PostgreSQL
     image: postgres:17  # Используется официальный образ PostgreSQL версии 17
