@@ -30,7 +30,7 @@
     sudo docker ps                             # Проверить работу контейнеров
 
 # Подключиться к базе в контейнере
-    sudo docker exec -it ff3c636d7116 psql -U postgres -d my_bot_db
+    sudo docker exec -it 5145e9473020 psql -U postgres -d my_bot_db
 
 # Подключиться к контейнеру
     sudo docker exec -it ff3c636d7116 bash
