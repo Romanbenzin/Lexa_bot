@@ -16,7 +16,7 @@ def short_api_request(request):
     data = {
         "model": "deepseek-chat",  # Укажи нужную модель. Можно переключить на deepseek-reasoner
         "messages": [
-            {"role": "user", "content": f"{request}"}
+            {"role": "user", "content": f"{request}, сделай это в максимум 4000 символов"}
         ]
     }
 
